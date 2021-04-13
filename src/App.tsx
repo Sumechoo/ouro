@@ -1,7 +1,8 @@
 /* eslint-disable */
 import * as THREE from 'three'
-import React, { useRef, useState } from 'react'
+import React, { FC, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
+import Effects from './Effects'
 
 function Box(props: any) {
   const mesh = useRef<THREE.Mesh>(null)
@@ -29,13 +30,54 @@ function Box(props: any) {
   )
 }
 
+const tempObject = new THREE.Object3D();
+
+const InstancedCubes: FC = () => {
+  const ref = useRef<THREE.InstancedMesh>();
+  const args: any = [null, null, 1000];
+
+  useFrame((state) => {
+    if (!ref.current) {
+      return;
+    }
+
+    const time = state.clock.getElapsedTime()
+    // ref.current.rotation.x = Math.sin(time / 4)
+    // ref.current.rotation.y = Math.sin(time / 2)
+  
+    let i = 0
+    for (let x = 0; x < 10; x++)
+      for (let y = 0; y < 10; y++)
+        for (let z = 0; z < 10; z++) {
+          const id = i++
+          tempObject.position.set(5 - x, 5 - y, 5 - z)
+          tempObject.scale.set(1, 1, 1)
+          tempObject.updateMatrix()
+          ref.current.setMatrixAt(id, tempObject.matrix)
+        }
+    ref.current.instanceMatrix.needsUpdate = true
+  })
+
+  return (
+    <instancedMesh ref={ref} args={args}>
+      <boxGeometry args={[0.7, 0.7, 0.7]}>
+      </boxGeometry>
+      <meshPhysicalMaterial color='gray' />
+    </instancedMesh>
+  )
+}
+
 export default function App() {
   return (
-    <Canvas>
+    <Canvas camera={{position: [10, 10, 10]}}>
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
+      <directionalLight position={[10, 10, 10]}/>
+      <InstancedCubes />
       <Box position={[-1.2, 0, 0]} />
       <Box position={[1.2, 0, 0]} />
+
+      <Effects />
     </Canvas>
   )
 }
