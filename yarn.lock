@@ -1457,6 +1457,11 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
+"@react-three/cannon@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@react-three/cannon/-/cannon-1.0.0.tgz#f5e653aafb4d39c7f6802f6b0582454ed0b7f180"
+  integrity sha512-uqMboNFzK3VS7VTnNwrI0eytwwJLD2T9j+UYZVcWQRk2u8ydas6fLKx4j30FQBrpUOkNqLdmwqn7IqnGKG8SSQ==
+
 "@react-three/fiber@6.0.13":
   version "6.0.13"
   resolved "https://registry.yarnpkg.com/@react-three/fiber/-/fiber-6.0.13.tgz#db2931dc63ae2abd7af6beb0809bce15b7e81cb2"

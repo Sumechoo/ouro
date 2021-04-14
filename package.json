@@ -11,6 +11,7 @@
   "dependencies": {
     "@babel/core": "7.12.3",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
+    "@react-three/cannon": "^1.0.0",
     "@react-three/fiber": "6.0.13",
     "@svgr/webpack": "5.5.0",
     "@types/three": "0.127.1",
