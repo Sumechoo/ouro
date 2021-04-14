@@ -14,9 +14,9 @@ export const SmallCube: FC<Props> = ({id, onDelete}) => {
     }, [id, onDelete])
 
     return (
-        <mesh onClick={handleDelete} ref={ref}>
+        <mesh receiveShadow castShadow onClick={handleDelete} ref={ref}>
             <boxBufferGeometry args={[2,2,2]} />
-            <meshBasicMaterial color='orange' />
+            <meshStandardMaterial color='orange' />
         </mesh>
     )
 }

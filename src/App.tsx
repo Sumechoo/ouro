@@ -13,10 +13,10 @@ export default function App() {
 
   return (
     <Fragment>
-      <Canvas camera={{position: [0, 6, 10]}}>
+      <Canvas shadows camera={{position: [0, 6, 10]}}>
         <Physics>
             <ambientLight />
-            <directionalLight position={[0, 10, 0]} intensity={10}/>
+            <directionalLight castShadow position={[5, 10, 10]} intensity={5}/>
 
             <Sandbox />
         </Physics>

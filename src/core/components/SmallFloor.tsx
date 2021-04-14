@@ -11,9 +11,9 @@ export const SmallFloor: FC<Props> = ({onPress}) => {
     const [ref] = usePlane(() => ({args: [2, 2, 2], rotation: [toRadians(-90), 0, 0]}));
 
     return (
-        <mesh onClick={onPress} ref={ref}>
+        <mesh receiveShadow onClick={onPress} ref={ref}>
             <planeGeometry args={[20,20,20]} />
-            <meshBasicMaterial color='yellow'/>
+            <meshStandardMaterial color='green'/>
         </mesh>
     );
 }
