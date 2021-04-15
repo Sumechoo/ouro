@@ -10,6 +10,7 @@ interface Props {
 export const SmallCube: FC<Props> = ({id, onDelete}) => {
     const [hovered, setHovered] = useState(false);
     const scale = hovered ? 1.2 : 1;
+    const color = hovered ? 'orange' : 'lightblue';
     const [ref] = useBox(() => ({args: [2, 2, 2], position: [0, 10, 0], mass: 1}));
 
     const handleDelete = useCallback((e: ThreeEvent<MouseEvent>) => {
@@ -29,7 +30,7 @@ export const SmallCube: FC<Props> = ({id, onDelete}) => {
             scale={[scale, scale, scale]}
         >
             <boxBufferGeometry args={[2,2,2]} />
-            <meshStandardMaterial color='orange' />
+            <meshStandardMaterial color={color} />
         </mesh>
     )
 }

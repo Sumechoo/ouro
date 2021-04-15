@@ -1,12 +1,14 @@
 import { useBox } from "@react-three/cannon";
 import { FC, Fragment } from "react";
 import { useKeyboardControls } from "../hooks/useKeyboardControls";
+import { useMouseControls } from "../hooks/useMouseControls";
 import { DefaultCamera } from "./DefaultCamera";
 
 export const ThirdPersonController: FC = () => {
     const [ref, api] = useBox(() => ({args: [1,1,1], position: [0, 4, 0], mass: 1, fixedRotation: true}))
     
     useKeyboardControls(api, ref);
+    useMouseControls(api, ref);
 
     return (
         <Fragment>

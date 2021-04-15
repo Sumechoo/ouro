@@ -1,0 +1,22 @@
+export const ArcanoidLevels = [
+    `
+x_x_x_x;
+_x_x_x_;
+x_x_x_x;
+_x_x_x_;
+x_x_x_x;
+    `,
+    `
+xxxxxxx;
+__xxx__;
+xxxxxxx;
+x_x_x_x;
+    `,
+    `
+x_x_x_x;
+x_x_x_x;
+x_x_x_x;
+x_x_x_x;
+x_x_x_x;
+    `
+]
