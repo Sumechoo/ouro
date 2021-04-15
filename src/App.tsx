@@ -1,8 +1,9 @@
-import React, { Fragment, useEffect, useRef } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import { Canvas } from '@react-three/fiber';
 import { Physics } from '@react-three/cannon';
 import { PerspectiveCamera } from 'three'
 import { Sandbox } from './games/Sandbox'
+import { Racing } from './games/Racing';
 
 export default function App() {
   const cameraRef = useRef<PerspectiveCamera>();
