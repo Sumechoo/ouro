@@ -1,29 +1,62 @@
 import { WorkerApi } from "@react-three/cannon";
-import { useCallback, useEffect } from "react";
+import { useFrame } from "@react-three/fiber";
+import { MutableRefObject, useCallback, useEffect } from "react";
+import { Object3D, Vector3 } from "three";
 
-export const useKeyboardControls = (api: WorkerApi) => {
+const speedVector = new Vector3(0, 0, 0);
+
+export const useKeyboardControls = (api: WorkerApi, ref: MutableRefObject<Object3D | undefined>) => {
     const keyDownListener = useCallback((event: KeyboardEvent) => {
         switch(event.key) {
             case 'w':
-                api.velocity.set(0, 2, -10);
+                speedVector.z = -0.1;
                 break;
             case 's':
-                api.velocity.set(0, 2, 10);
+                speedVector.z = 0.1;
                 break;
             case 'a':
-                api.velocity.set(-10, 2, 0);
+                speedVector.x = -0.1;
                 break;
             case 'd':
-                api.velocity.set(10, 2, 0);
+                speedVector.x = 0.1;
                 break;
         }
-    }, [api]);
+    }, []);
+
+    const keyUpListener = useCallback((event: KeyboardEvent) => {
+        switch(event.key) {
+            case 'w':
+            case 's':
+                speedVector.z = 0;
+                break;
+            case 'a':
+            case 'd':
+                speedVector.x = 0;
+                break;
+        }
+    }, []);
+
+    useFrame(() => {
+        if(!ref.current) {
+            return;
+        }
+
+        const {x, y, z} = ref.current.position;
+
+        api.position.set(
+            x + speedVector.x,
+            y + speedVector.y,
+            z + speedVector.z,
+        )
+    })
 
     useEffect(() => {
         document.addEventListener('keydown', keyDownListener);
+        document.addEventListener('keyup', keyUpListener);
 
         return () => {
             document.removeEventListener('keydown', keyDownListener);
+            document.removeEventListener('keyup', keyUpListener);
         }
-    }, [keyDownListener]);
+    }, [keyDownListener, keyUpListener]);
 };

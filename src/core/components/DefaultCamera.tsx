@@ -19,6 +19,6 @@ export const DefaultCamera: FC<Props> = ({position}) => {
     }, [cameraRef, set])
 
     return (
-        <perspectiveCamera ref={cameraRef} position={position} />
+        <perspectiveCamera ref={cameraRef} position={position} aspect={16 / 9} />
     );
 };

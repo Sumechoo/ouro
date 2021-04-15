@@ -6,7 +6,7 @@ import { DefaultCamera } from "./DefaultCamera";
 export const ThirdPersonController: FC = () => {
     const [ref, api] = useBox(() => ({args: [1,1,1], position: [0, 4, 0], mass: 1, fixedRotation: true}))
     
-    useKeyboardControls(api);
+    useKeyboardControls(api, ref);
 
     return (
         <Fragment>
@@ -14,7 +14,7 @@ export const ThirdPersonController: FC = () => {
                 <boxGeometry args={[1,1,1]} />
                 <meshStandardMaterial color='lightcoral' />
                 
-                {/* <DefaultCamera position={[0,0,0]}/> */}
+                <DefaultCamera position={[0,1,4]}/>
             </mesh>
         </Fragment>
     )
