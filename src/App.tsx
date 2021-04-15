@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { Physics } from '@react-three/cannon';
 import { PerspectiveCamera } from 'three'
 import { Sandbox } from './games/Sandbox'
+import { Racing } from './games/Racing';
 
 export default function App() {
   const cameraRef = useRef<PerspectiveCamera>();
@@ -18,7 +19,7 @@ export default function App() {
             <ambientLight />
             <directionalLight castShadow position={[5, 10, 10]} intensity={5}/>
 
-            <Sandbox />
+            <Racing />
         </Physics>
       </Canvas>
     </Fragment>
