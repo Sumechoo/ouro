@@ -1,4 +1,4 @@
 export const bounceMaterial = {
     friction: 0,
-    restitution: 1,
+    restitution: 0.9,
 }

@@ -3,7 +3,7 @@ import { useFrame, Vector3 } from "@react-three/fiber";
 import { FC } from "react";
 import { bounceMaterial } from "../constants";
 
-const handleArgs: Vector3 = [3,0.2,0.3];
+const handleArgs: Vector3 = [3,0.2,0.6];
 
 export const Handle: FC = () => {
     const [ref, api] = useBox(() => ({
@@ -14,7 +14,7 @@ export const Handle: FC = () => {
     }))
 
     useFrame((state) => {
-        api.position.set(state.mouse.x * 5, 0, 6);
+        api.position.set(state.mouse.x * 5, 0, 7 - Math.abs(state.mouse.x) * 2);
         api.rotation.set(0, state.mouse.x, 0);
     });
 

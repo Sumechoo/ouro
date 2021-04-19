@@ -8,7 +8,6 @@ import { Handle } from "./components/Handle";
 import { Background } from "./components/Background";
 import { Ball } from "./components/Ball";
 import { Walls } from "./components/Walls";
-import Effects from "./Effects";
 import { MainMenu } from "./components/UI/MainMenu";
 import { Physics } from "@react-three/cannon";
 import { Splash } from "../../core/scenes/Splash";
@@ -23,6 +22,7 @@ export const arcanoidTheme = {
     titleBig: {
         fontWeight: 'bold',
         fontSize: 48,
+        transform: 'rotate(13deg)'
     } as CSSProperties,
 }
 
@@ -57,7 +57,6 @@ const ArcanoidGame: FC = () => {
                 size={100}
                 iterations={1}
             >
-                {/* <Effects /> */}
                 <ambientLight intensity={0.5} />
                 <directionalLight castShadow position={[5, 2, 5]} intensity={1}/>
 

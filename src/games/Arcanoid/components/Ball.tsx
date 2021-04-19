@@ -1,10 +1,13 @@
 import { useSphere } from "@react-three/cannon";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useRef } from "react";
 import { useArcanoidStore } from "..";
 import { bounceMaterial } from "../constants";
 
+const MIN_SPEED = 8;
+
 export const Ball: FC = () => {
-    const { setLevel } = useArcanoidStore();
+    const ignoreSubscriptionRef = useRef(true);
+    const { setLevel, currentLevel } = useArcanoidStore();
     const [ref, api] = useSphere(() => ({
         mass: 0.00000000001,
         args: 0.2,
@@ -13,19 +16,35 @@ export const Ball: FC = () => {
     }));
 
     useEffect(() => {
-        api.velocity.set(Math.random() * 2,0,-10);
-    }, [api]);
+        ignoreSubscriptionRef.current = true;
+
+        api.velocity.set(0,0,1);
+        api.position.set(0,0,2);
+    }, [api, currentLevel]);
 
     useEffect(() => {
-        api.velocity.subscribe(([x,y,z]) => api.velocity.set(x,0,z));
+        api.velocity.subscribe(([x,y,z]) => {
+            const needToSpeedup = Math.abs(x) < MIN_SPEED && Math.abs(z) < MIN_SPEED;
+
+            api.velocity.set(
+                needToSpeedup ? x * 1.1 : x,
+                0,
+                needToSpeedup ? z * 1.1 : z,
+            )
+        });
         api.position.subscribe(([x,y,z]) => {
+            if (ignoreSubscriptionRef.current) {
+                ignoreSubscriptionRef.current = false;
+                return;
+            }
+
             api.position.set(x,0,z);
 
             if (z > 9) {
                 setLevel(-1);
             }
         });
-    }, [api, setLevel]);
+    }, [api, setLevel, ignoreSubscriptionRef]);
 
     return (
         <mesh

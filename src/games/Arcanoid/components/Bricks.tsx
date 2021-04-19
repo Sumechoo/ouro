@@ -1,5 +1,5 @@
 import { useBox } from "@react-three/cannon";
-import { FC, Fragment, useCallback, useEffect, useMemo, useState } from "react";
+import { FC, Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useArcanoidStore } from "..";
 import { bounceMaterial } from "../constants";
 
@@ -39,7 +39,7 @@ const Brick: FC<BrickProps> = ({position, onDestroy}) => {
             ref={ref}
             castShadow
             receiveShadow
-            scale={[size, 0.4, size]}
+            scale={[size, 0.8, size]}
         >
             {brickMaterial}
             {brickGeometry}

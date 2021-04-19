@@ -1,5 +1,6 @@
 import { Canvas } from "@react-three/fiber";
-import { CSSProperties, FC } from "react";
+import { CSSProperties, FC, useEffect, useState } from "react";
+import { Splash } from "../scenes/Splash";
 
 import { GameInstance } from "../types";
 
@@ -26,10 +27,22 @@ const styles = {
 }
 
 export const GameInstanceRenderer: FC<Props> = ({instance}) => {
+    const [showSplash, setShowSplash] = useState(true);
+    
     const {
         Game,
         Ui,
     } = instance;
+
+    useEffect(() => {setTimeout(() => setShowSplash(false), 2000)}, [])
+
+    if (showSplash) {
+        return (
+            <Canvas style={styles.absolutePositionStyle} shadows camera={{position: [10, 10, 10]}}>
+                <Splash />
+            </Canvas>
+        )
+    }
 
     return (
         <div style={styles.previewContainer}>
