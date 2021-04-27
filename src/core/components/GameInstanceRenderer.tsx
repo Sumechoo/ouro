@@ -11,11 +11,11 @@ interface Props {
 const styles = {
     previewContainer: {
         position: 'absolute',
-        width: 480,
-        height: 800,
-        left: 'calc(50% - 240px)',
-        top: 'calc(50% - 400px)',
-        border: 'solid black',
+        // width: 480,
+        // height: 800,
+        // left: 'calc(50% - 240px)',
+        // top: 'calc(50% - 400px)',
+        // border: 'solid black',
     } as CSSProperties,
     absolutePositionStyle: {
         position: 'absolute',
@@ -45,7 +45,7 @@ export const GameInstanceRenderer: FC<Props> = ({instance}) => {
     }
 
     return (
-        <div style={styles.previewContainer}>
+        <div style={styles.absolutePositionStyle}>
             <Canvas style={styles.absolutePositionStyle} shadows camera={{position: [0, 8, 9]}}>
                 <Game />
             </Canvas>

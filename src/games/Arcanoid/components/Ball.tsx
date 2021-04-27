@@ -24,6 +24,10 @@ export const Ball: FC = () => {
 
     useEffect(() => {
         api.velocity.subscribe(([x,y,z]) => {
+            if (ignoreSubscriptionRef.current) {
+                return;
+            }
+
             const needToSpeedup = Math.abs(x) < MIN_SPEED && Math.abs(z) < MIN_SPEED;
 
             api.velocity.set(

@@ -1,5 +1,5 @@
 import { useBox } from "@react-three/cannon";
-import { FC, Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { FC, Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { useArcanoidStore } from "..";
 import { bounceMaterial } from "../constants";
 

@@ -10,11 +10,10 @@ import { Ball } from "./components/Ball";
 import { Walls } from "./components/Walls";
 import { MainMenu } from "./components/UI/MainMenu";
 import { Physics } from "@react-three/cannon";
-import { Splash } from "../../core/scenes/Splash";
 
 export const arcanoidTheme = {
     basicText: {
-        fontFamily: 'Rockwell',
+        fontFamily: 'Skia',
         color: 'white',
         backgroundColor: '#F76242',
         padding: 10,
@@ -65,7 +64,6 @@ const ArcanoidGame: FC = () => {
                 <Ball />
                 <Walls />
                 <Background />
-                {/* <Splash /> */}
             </Physics>
         </Fragment>
     );

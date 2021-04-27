@@ -1,7 +1,6 @@
-import { Physics, useBox, usePlane } from "@react-three/cannon";
+import { Physics, useBox } from "@react-three/cannon";
 import { Vector3 } from "@react-three/fiber";
-import { FC, Fragment } from "react";
-import { SmallFloor } from "../components/SmallFloor";
+import { FC } from "react";
 import { toRadians } from "../utils";
 
 interface CubeProps {
@@ -56,8 +55,6 @@ export const Splash: FC = () => {
             <directionalLight color='red' intensity={3}/>
             <directionalLight color='yellow' intensity={2} position={[0, 0, 10]}/>
             <directionalLight color='lightblue' intensity={1} position={[10, 0, 0]}/>
-
-            {/* <SmallFloor onPress={() => {}} /> */}
         </Physics>
     );
 };
