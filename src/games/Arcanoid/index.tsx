@@ -1,4 +1,4 @@
-import { CSSProperties, FC, Fragment } from "react";
+import { CSSProperties, FC, Fragment, useEffect } from "react";
 import create from 'zustand';
 
 import { GameInstance } from "../../core/types";
@@ -10,6 +10,8 @@ import { Ball } from "./components/Ball";
 import { Walls } from "./components/Walls";
 import { MainMenu } from "./components/UI/MainMenu";
 import { Physics } from "@react-three/cannon";
+import { useThree } from "@react-three/fiber";
+import { FogExp2 } from "three";
 
 export const arcanoidTheme = {
     basicText: {
@@ -20,7 +22,7 @@ export const arcanoidTheme = {
     } as CSSProperties,
     titleBig: {
         fontWeight: 'bold',
-        fontSize: 48,
+        fontSize: '5vh',
         transform: 'rotate(13deg)'
     } as CSSProperties,
 }
@@ -42,6 +44,11 @@ export const useArcanoidStore = create<ArcanoidStore>((set) => ({
 
 const ArcanoidGame: FC = () => {
     const currentLevel = useArcanoidStore(({currentLevel}) => currentLevel);
+    const scene = useThree(({scene}) => scene);
+
+    useEffect(() => {
+        scene.fog = new FogExp2('0xfff', 0.03);
+    }, [scene]);
 
     if(currentLevel === -1) {
         return null;
@@ -56,9 +63,7 @@ const ArcanoidGame: FC = () => {
                 size={100}
                 iterations={1}
             >
-                <ambientLight intensity={0.5} />
-                <directionalLight castShadow position={[5, 2, 5]} intensity={1}/>
-
+                <ambientLight intensity={0.05} color='blue' />
                 <Bricks key={currentLevel} level={ArcanoidLevels[currentLevel]} />
                 <Handle />
                 <Ball />
@@ -73,7 +78,14 @@ const ArcanoidUI: FC = () => {
     const {scores, currentLevel} = useArcanoidStore();
 
     return (
-        <div style={{margin: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+        <div style={{
+            margin: 10,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: '40%',
+        }}>
             {currentLevel === -1 && <MainMenu />}
             <p style={arcanoidTheme.basicText}>Score: {scores}</p>
         </div>

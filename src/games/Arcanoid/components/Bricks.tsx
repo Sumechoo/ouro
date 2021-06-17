@@ -3,8 +3,13 @@ import { FC, Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { useArcanoidStore } from "..";
 import { bounceMaterial } from "../constants";
 
+enum BrickType {
+    BASIC, DANGER
+}
+
 interface BrickPosition {
     position: number[];
+    type: BrickType;
     id: string;
 }
 
@@ -14,9 +19,13 @@ interface BrickProps {
 }
 
 const brickGeometry = <boxGeometry />;
-const brickMaterial = <meshPhongMaterial color='gray' />;
+const brickMaterialMap: Record<BrickType, any> = {
+    [BrickType.BASIC]: <meshPhongMaterial color='gray' />,
+    [BrickType.DANGER]: <meshPhongMaterial color='red' />
+}
 
 const Brick: FC<BrickProps> = ({position, onDestroy}) => {
+    const { type } = position;
     const incrementScores = useArcanoidStore((store) => store.incrementScores);
 
     const handleCollide = useCallback(() => {
@@ -39,9 +48,9 @@ const Brick: FC<BrickProps> = ({position, onDestroy}) => {
             ref={ref}
             castShadow
             receiveShadow
-            scale={[size, 0.8, size]}
+            scale={[size, 0.8 + Math.random() * 5, size]}
         >
-            {brickMaterial}
+            {brickMaterialMap[type]}
             {brickGeometry}
         </mesh>
     )
@@ -69,6 +78,14 @@ export const Bricks: FC<Props> = ({level}) => {
                     case 'x':
                         positionsArray.push({
                             id: `brick-${itemIndex}`,
+                            type: BrickType.BASIC,
+                            position: [index - 4, 0, y - 3],
+                        });
+                        break;
+                    case 'r':
+                        positionsArray.push({
+                            id: `brick-${itemIndex}`,
+                            type: BrickType.DANGER,
                             position: [index - 4, 0, y - 3],
                         });
                         break;

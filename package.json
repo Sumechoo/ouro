@@ -86,7 +86,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "node scripts/build.js && npx gulp && rm -rf ./build/static",
     "test": "node scripts/test.js --env=jsdom"
   },
   "browserslist": [

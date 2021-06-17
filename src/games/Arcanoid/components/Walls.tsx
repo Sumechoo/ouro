@@ -25,7 +25,7 @@ export const Wall: FC<WallProps> = ({type, position}) => {
             receiveShadow
         >
             <boxGeometry args={wallArgs}/>
-            <meshStandardMaterial color='white'/>
+            <meshPhysicalMaterial color='white'/>
         </mesh>
     );
 };

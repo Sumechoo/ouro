@@ -35,7 +35,7 @@ export const MainMenu: FC = () => {
                     style={styles.button}
                     onClick={startGame}
                 >
-                    Start
+                    Start game
                 </button>
                 <button style={styles.button}>
                     Options

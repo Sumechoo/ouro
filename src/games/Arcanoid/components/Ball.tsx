@@ -58,6 +58,13 @@ export const Ball: FC = () => {
         >
             <sphereGeometry args={[0.2,10,10]} />
             <meshStandardMaterial color='#F76242' />
+            <pointLight
+                position={[0, 1, 0]}
+                intensity={2}
+                distance={7}
+                color='orange'
+                castShadow
+            />
         </mesh>
     );
 };
