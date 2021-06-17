@@ -16,7 +16,7 @@ export const ThirdPersonController: FC = () => {
                 <boxGeometry args={[1,1,1]} />
                 <meshStandardMaterial color='lightcoral' />
                 
-                <DefaultCamera position={[0,1,4]}/>
+                <DefaultCamera position={[0,1,0]}/>
             </mesh>
         </Fragment>
     )

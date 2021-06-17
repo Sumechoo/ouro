@@ -1,11 +1,11 @@
 import { Fragment } from 'react';
 import { GameInstanceRenderer } from './core/components/GameInstanceRenderer';
-import { Arcanoid } from './games/Arcanoid';
+import { Sandbox } from './games/Sandbox';
 
 export default function App() {
   return (
     <Fragment>
-      <GameInstanceRenderer instance={Arcanoid}/>
+      <GameInstanceRenderer instance={Sandbox}/>
     </Fragment>
   )
 }

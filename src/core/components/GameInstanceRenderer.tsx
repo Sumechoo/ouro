@@ -1,5 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { CSSProperties, FC, useEffect, useState } from "react";
+import { globalConfig } from "../../globalConfig";
+
 import { Splash } from "../scenes/Splash";
 
 import { GameInstance } from "../types";
@@ -29,7 +31,7 @@ export const GameInstanceRenderer: FC<Props> = ({instance}) => {
         Ui,
     } = instance;
 
-    useEffect(() => {setTimeout(() => setShowSplash(false), 2000)}, [])
+    useEffect(() => {setTimeout(() => setShowSplash(false), globalConfig.SHOW_SPLASH ? 2000 : 0)}, [])
 
     if (showSplash) {
         return (

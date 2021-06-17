@@ -1,28 +1,37 @@
-import { FC, Fragment, useCallback, useState } from "react";
-import { SmallCube } from "../../core/components/SmallCube";
+import { Physics } from "@react-three/cannon";
+import { FC, useCallback, useEffect, useState } from "react";
 import { SmallFloor } from "../../core/components/SmallFloor";
 import { ThirdPersonController } from "../../core/components/ThirdPersonController";
-import { Vehicle } from "../../core/components/Vehicle";
+import { GameInstance } from "../../core/types";
+import { Model } from "../../core/components/Model";
+import { useThree } from "@react-three/fiber";
+import { FogExp2 } from "three";
 
-export const Sandbox: FC = () => {
+const Game: FC = () => {
     const [cubes, setCubes] = useState([1]);
+    const scene = useThree(({scene}) => scene);
 
     const handleAddCubes = useCallback(() => {
         setCubes([...cubes, Date.now()]);
     }, [cubes]);
 
-    const handleDeleteCube = useCallback((cube: number) => {
-        setCubes([...cubes.filter((id) => id!== cube)]);
-    }, [cubes]);
+    useEffect(() => {
+        scene.fog = new FogExp2('lightgray', 0.06);
+    }, [scene]);
 
     return (
-        <Fragment>
-            {cubes.map((cube) => <SmallCube onDelete={handleDeleteCube} id={cube} key={cube} />)}
-
-            <Vehicle />
+        <Physics>
+            <ambientLight intensity={0.2}/>
+            <directionalLight intensity={1} castShadow />
 
             <ThirdPersonController />
+            {[1,1,1,1].map(() => <Model key={Math.random()} />)}
             <SmallFloor onPress={handleAddCubes} />
-        </Fragment>
+        </Physics>
     );
 };
+
+export const Sandbox: GameInstance = {
+    Game, 
+    Ui: () => null,
+}

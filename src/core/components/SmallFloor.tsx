@@ -12,8 +12,8 @@ export const SmallFloor: FC<Props> = ({onPress}) => {
 
     return (
         <mesh receiveShadow onClick={onPress} ref={ref}>
-            <planeGeometry args={[20,20,20]} />
-            <meshStandardMaterial color='green'/>
+            {/* <planeGeometry args={[20,20,20]} /> */}
+            {/* <meshStandardMaterial color='green'/> */}
         </mesh>
     );
 }
