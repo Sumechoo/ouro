@@ -2249,6 +2249,10 @@ alphanum-sort@^1.0.0:
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
+"ammojs-typed@github:giniedp/ammojs-typed":
+  version "1.0.5"
+  resolved "https://codeload.github.com/giniedp/ammojs-typed/tar.gz/b2d98d5abfec324943ecdac1ae1158968fd54e35"
+
 ansi-colors@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-1.1.0.tgz#6374b4dd5d4718ff3ce27a671a3b1cad077132a9"

@@ -16,8 +16,6 @@ export const Model: FC<Props> = () => {
     const geometry = object.children[0].geometry as BufferGeometry;
     const [ colorMap ] = useLoader(TextureLoader, [textureUrl.default]);
 
-    console.info(object);
-
     colorMap.magFilter = THREE.NearestFilter;
 
     return (
