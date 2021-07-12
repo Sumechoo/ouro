@@ -1,12 +1,14 @@
 import { createContext, FC, useEffect, useState } from "react";
-import Ammo from 'ammojs-typed';
 import * as THREE from 'three';
 import { useFrame } from "@react-three/fiber";
+import Ammo from 'ammojs-typed';
+
+import { AmmoProvider } from "./AmmoProvider";
 
 const clock = new THREE.Clock(true);
 
 const createWorld = async () => {
-    const api = await Ammo();
+    const api = await AmmoProvider.getApi();
 
     const collisionConfiguration = new api.btDefaultCollisionConfiguration();
     const dispatcher = new api.btCollisionDispatcher( collisionConfiguration );

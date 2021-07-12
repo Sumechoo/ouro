@@ -1,28 +1,16 @@
 import { GameInstance } from "../../core/types";
 import { AmmoPhysics } from "../../core/Ammo/AmmoPhysics";
-import { FC } from "react";
-import { useRigidbody } from "../../core/Ammo/hooks/useRigidbody";
-
-const AmmoCube: FC = () => {
-    const [ref] = useRigidbody();
-
-    return (
-        <mesh
-            ref={ref}
-        >
-            <boxGeometry />
-            <meshBasicMaterial color='red' />
-        </mesh>
-    )
-}
+import { AmmoBox } from './components/AmmoBox';
 
 export const AmmoPlayground: GameInstance = {
     Ui: () => null,
     Game: () => {
         return (
             <AmmoPhysics>
-                <AmmoCube />
-                <AmmoCube />
+                <AmmoBox size={[10, 0.1, 10]} />
+
+                <AmmoBox mass={10} position={[0, 4, 0]} />
+                <AmmoBox mass={10} position={[0.7, 6, 0]} />
             </AmmoPhysics>
         )
     }
