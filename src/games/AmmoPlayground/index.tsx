@@ -7,6 +7,7 @@ import { Player } from './components/Player';
 import { useThree } from "@react-three/fiber";
 import { FogExp2 } from "three";
 import { useEffect } from "react";
+import { toRadians } from "../../core/utils";
 
 export const AmmoPlayground: GameInstance = {
     Ui: () => null,
@@ -19,10 +20,8 @@ export const AmmoPlayground: GameInstance = {
 
         return (
             <AmmoPhysics>
-                <directionalLight />
-                <ambientLight />
-
-                <AmmoBox size={[20, 1, 20]} />
+                <directionalLight castShadow />
+                <ambientLight intensity={0.5} />
 
                 <AmmoBox
                     mass={10}
@@ -41,10 +40,18 @@ export const AmmoPlayground: GameInstance = {
                 <Player />
 
                 <ConcaveModel
-                    position={[0, 0, -4]}
+                    position={[0, 0, -5]}
                 />
                 <ConcaveModel
-                    position={[-16, 0, -4]}
+                    position={[0, 0, 5]}
+                    rotation={[0, toRadians(180), 0]}
+                />
+                <ConcaveModel
+                    position={[-16, 0, -5]}
+                />
+                <ConcaveModel
+                    position={[-16, 0, 5]}
+                    rotation={[0, toRadians(180), 0]}
                 />
             </AmmoPhysics>
         )

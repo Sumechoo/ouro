@@ -9,7 +9,7 @@ interface Props {
 
 export const DefaultCamera: FC<Props> = ({
     position = [0,0,0],
-    rotation = [0,0,0]
+    rotation = [0,0,0],
 }) => {
     const { set } = useThree();
     const cameraRef = useRef<PerspectiveCamera>();
@@ -28,6 +28,7 @@ export const DefaultCamera: FC<Props> = ({
             ref={cameraRef}
             position={position}
             rotation={rotation}
+            fov={90}
             aspect={window.innerWidth / window.innerHeight}
         />
     );

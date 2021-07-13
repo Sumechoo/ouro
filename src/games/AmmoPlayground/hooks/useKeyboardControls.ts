@@ -7,23 +7,34 @@ import { AmmoProvider } from "../../../core/Ammo/AmmoProvider";
 const directionVector = new Vector3(0,0,0);
 const speedVector = new Vector3(0, 0, 0);
 
+const MOVEMONT_SPEED = 3;
+
 export const useKeyboardControls = (ref: MutableRefObject<Object3D | undefined>, rb?: Ammo.btRigidBody) => {
     const keyDownListener = useCallback((event: KeyboardEvent) => {
         switch(event.key) {
             case 'w':
-                speedVector.z = -10;
+                speedVector.z = -MOVEMONT_SPEED;
                 break;
             case 's':
-                speedVector.z = 10;
+                speedVector.z = MOVEMONT_SPEED;
                 break;
             case 'a':
-                speedVector.x = -10;
+                speedVector.x = -MOVEMONT_SPEED;
                 break;
             case 'd':
-                speedVector.x = 10;
+                speedVector.x = MOVEMONT_SPEED;
+                break;
+            case ' ':
+                AmmoProvider.getApi()
+                    .then((api) => {
+                        if(rb) {
+                            const velocity = rb.getLinearVelocity();
+                            rb.setLinearVelocity(new api.btVector3(velocity.x(), 4, velocity.z()));
+                        }
+                    })
                 break;
         }
-    }, []);
+    }, [rb]);
 
     const keyUpListener = useCallback((event: KeyboardEvent) => {
         switch(event.key) {

@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { CSSProperties, FC, useEffect, useState } from "react";
+import { CSSProperties, FC, useCallback, useEffect, useState } from "react";
 import { globalConfig } from "../../globalConfig";
 
 import { Splash } from "../scenes/Splash";
@@ -31,7 +31,16 @@ export const GameInstanceRenderer: FC<Props> = ({instance}) => {
         Ui,
     } = instance;
 
-    useEffect(() => {setTimeout(() => setShowSplash(false), globalConfig.SHOW_SPLASH ? 2000 : 0)}, [])
+    useEffect(() => {setTimeout(() => setShowSplash(false), globalConfig.SHOW_SPLASH ? 2000 : 0)}, []);
+
+    const lockMouse = useCallback(() => {
+        // alert('mouse lock');
+        document.body.requestPointerLock();
+    }, []);
+
+    useEffect(() => {
+        document.addEventListener('click', lockMouse);
+    }, [lockMouse])
 
     if (showSplash) {
         return (
@@ -43,7 +52,11 @@ export const GameInstanceRenderer: FC<Props> = ({instance}) => {
 
     return (
         <div style={styles.absolutePositionStyle}>
-            <Canvas style={styles.absolutePositionStyle} shadows camera={{position: [0, 5, 9], fov: 100}}>
+            <Canvas
+                style={styles.absolutePositionStyle}
+                shadows
+                camera={{position: [0, 5, 9], fov: 100}}
+            >
                 <Game />
             </Canvas>
             <div style={{...styles.absolutePositionStyle, pointerEvents: 'none'}}>

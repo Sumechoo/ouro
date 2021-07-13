@@ -20,7 +20,7 @@ export const Vehicle: FC = () => {
             <mesh ref={bodyRef} castShadow receiveShadow>
                 <boxGeometry args={[2, 1, 3]}/>
                 <meshBasicMaterial color='lightcoral'/>
-                <DefaultCamera position={[0, 3, 6]}/>
+                {/* <DefaultCamera position={[0, 3, 6]}/> */}
 
             </mesh>
             <mesh castShadow receiveShadow ref={frontLeftWheelRef}>

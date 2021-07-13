@@ -1,5 +1,5 @@
 import { FC, Suspense } from "react";
-import { useLoader, Vector3 } from "@react-three/fiber";
+import { Euler, useLoader, Vector3 } from "@react-three/fiber";
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import * as THREE from 'three';
@@ -11,16 +11,18 @@ const textureUrl = require('../../../resources/models/sh1_building_12/texture.pn
 
 interface Props {
     position?: Vector3;
+    rotation?: Euler;
 }
 
 export const Model: FC<Props> = ({
     position = [0,0,0],
+    rotation = [0,0,0],
 }) => {
     const object = useLoader(OBJLoader, url.default) as any;
-    const geometry = object.children[0].geometry as BufferGeometry;
+    const geometryData = object.children[0].geometry as BufferGeometry;
     const [ colorMap ] = useLoader(TextureLoader, [textureUrl.default]);
 
-    const {ref} = useBox(0, [1,1,1], position, geometry);
+    const {ref} = useBox({mass: 0, size: [1,1,1], position, rotation, geometryData});
 
     colorMap.magFilter = THREE.NearestFilter;
 
@@ -29,9 +31,9 @@ export const Model: FC<Props> = ({
             ref={ref}
             castShadow
             receiveShadow
-            geometry={geometry}
+            geometry={geometryData}
         >
-            <meshPhysicalMaterial map={colorMap}/>
+            <meshStandardMaterial transparent map={colorMap}/>
         </mesh>
     )
 };

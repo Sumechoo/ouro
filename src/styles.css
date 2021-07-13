@@ -11,7 +11,7 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
-  background: rgb(209, 209, 214);
+  background-color: lightgray;
   /* background: linear-gradient(0deg, rgba(2,0,36,1) 55%, rgba(200,45,101,1) 65%, rgba(0,84,255,1) 100%); */
 }
 

@@ -1,4 +1,4 @@
-import { useFrame, Vector3 } from "@react-three/fiber";
+import { Euler, useFrame, Vector3 } from "@react-three/fiber";
 import { useContext, useEffect, useRef, useState } from "react"
 import * as THREE from 'three';
 import Ammo from 'ammojs-typed';
@@ -25,12 +25,22 @@ function createTriangleShapeByBufferGeometry(api, geometry: THREE.BufferGeometry
     return shape;
 }
 
-export const useBox = (
-    mass = 0,
-    size: Vector3 = [1,1,1],
-    position: Vector3 = [0,0,0],
-    geometryData?: THREE.BufferGeometry,
-) => {
+interface Props {
+    mass: number;
+    size: Vector3;
+    position: Vector3;
+    rotation?: Euler;
+    geometryData?: THREE.BufferGeometry;
+}
+
+export const useBox = (props: Props) => {
+    const {
+        mass = 0,
+        size = [1,1,1],
+        position = [0,0,0],
+        rotation = [0,0,0],
+        geometryData,
+    } = props;
     const ref = useRef(new THREE.Object3D());
     const [rb, setRb] = useState<Ammo.btRigidBody>();
     const context = useContext(AmmoPhysicsContext);
@@ -65,10 +75,14 @@ export const useBox = (
         const tempVec = new api.btVector3(size[0] / 2, size[1] / 2, size[2] / 2);
         const geometry = new api.btBoxShape(tempVec);
         const transform = new api.btTransform();
+        const rEuler = new THREE.Euler(rotation[0], rotation[1], rotation[2]);
+        const rQuart = new THREE.Quaternion().setFromEuler(rEuler, true);
+
 
         let cGeometry = geometryData && createTriangleShapeByBufferGeometry(api, geometryData, 1);
 
         transform.setIdentity();
+        transform.setRotation(new api.btQuaternion(rQuart.x, rQuart.y, rQuart.z, rQuart.w));
         transform.setOrigin(new api.btVector3(position[0], position[1], position[2]));
 
         const motionState = new api.btDefaultMotionState(transform);

@@ -14,10 +14,10 @@ export const AmmoBox: FC<Props> = ({
     position = [0,0,0],
     children
 }) => {
-    const {ref} = useBox(mass, size, position);
+    const {ref} = useBox({mass, size, position});
 
     return (
-        <mesh ref={ref} >
+        <mesh ref={ref} castShadow receiveShadow>
             <boxGeometry />
             <meshPhysicalMaterial color={mass > 0 ? 'red' : 'blue'} />
 
