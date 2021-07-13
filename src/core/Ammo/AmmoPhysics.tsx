@@ -43,10 +43,6 @@ export const AmmoPhysics: FC = ({ children }) => {
             });
     }, []);
 
-    useEffect(() => {
-        console.info(contextValue);
-    }, [contextValue]);
-
     if (!contextValue) {
         return null;
     }

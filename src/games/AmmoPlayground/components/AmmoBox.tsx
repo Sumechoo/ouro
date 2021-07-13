@@ -11,14 +11,17 @@ interface Props {
 export const AmmoBox: FC<Props> = ({
     mass = 0,
     size = [1,1,1],
-    position = [0,0,0]
+    position = [0,0,0],
+    children
 }) => {
-    const [ref] = useBox(mass, size, position);
+    const {ref} = useBox(mass, size, position);
 
     return (
         <mesh ref={ref} >
             <boxGeometry />
-            <meshBasicMaterial color={mass > 0 ? 'red' : 'blue'} />
+            <meshPhysicalMaterial color={mass > 0 ? 'red' : 'blue'} />
+
+            {children}
         </mesh>
     )
 }

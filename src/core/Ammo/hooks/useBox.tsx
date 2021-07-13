@@ -1,5 +1,5 @@
 import { useFrame, Vector3 } from "@react-three/fiber";
-import { useContext, useEffect, useRef } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import * as THREE from 'three';
 import Ammo from 'ammojs-typed';
 
@@ -10,13 +10,29 @@ let TRANSFORM_AUX: Ammo.btTransform;
 
 AmmoProvider.getApi().then((api) => TRANSFORM_AUX = new api.btTransform());
 
+function createTriangleShapeByBufferGeometry(api, geometry: THREE.BufferGeometry, scalingFactor: number) {
+    var mesh = new api.btTriangleMesh(true, true);
+    var vertexPositionArray = geometry.attributes.position.array;
+    for (var i = 0; i < geometry.attributes.position.count/3; i++) {
+            mesh.addTriangle(
+                new api.btVector3(vertexPositionArray[i*9+0]*scalingFactor, vertexPositionArray[i*9+1]*scalingFactor, vertexPositionArray[i*9+2]*scalingFactor ),
+                new api.btVector3(vertexPositionArray[i*9+3]*scalingFactor, vertexPositionArray[i*9+4]*scalingFactor, vertexPositionArray[i*9+5]*scalingFactor),
+                new api.btVector3(vertexPositionArray[i*9+6]*scalingFactor, vertexPositionArray[i*9+7]*scalingFactor, vertexPositionArray[i*9+8]*scalingFactor),
+                false
+            );
+    }
+    var shape = new api.btBvhTriangleMeshShape(mesh, true, true);
+    return shape;
+}
+
 export const useBox = (
     mass = 0,
     size: Vector3 = [1,1,1],
-    position: Vector3 = [0,0,0]
+    position: Vector3 = [0,0,0],
+    geometryData?: THREE.BufferGeometry,
 ) => {
     const ref = useRef(new THREE.Object3D());
-    const rigidbodyRef = useRef<any>();
+    const [rb, setRb] = useState<Ammo.btRigidBody>();
     const context = useContext(AmmoPhysicsContext);
 
     useEffect(() => {
@@ -25,12 +41,15 @@ export const useBox = (
         }
 
         return () => {
-            context?.world.removeRigidBody(rigidbodyRef.current);
+            if (rb) {
+                context?.world.removeRigidBody(rb);
+                setRb(undefined);
+            }
         }
-    }, [ref, context, size]);
+    }, [ref, context, size, rb]);
 
     useFrame(() => {
-        const motionState = rigidbodyRef.current?.getMotionState();
+        const motionState = rb?.getMotionState();
 
         if (motionState && ref.current) {
             motionState.getWorldTransform(TRANSFORM_AUX);
@@ -47,6 +66,8 @@ export const useBox = (
         const geometry = new api.btBoxShape(tempVec);
         const transform = new api.btTransform();
 
+        let cGeometry = geometryData && createTriangleShapeByBufferGeometry(api, geometryData, 1);
+
         transform.setIdentity();
         transform.setOrigin(new api.btVector3(position[0], position[1], position[2]));
 
@@ -54,19 +75,22 @@ export const useBox = (
         const localInertia = new api.btVector3(0,0,0);
 
         geometry.calculateLocalInertia(mass, localInertia);
-        const rbConstructionInfo = new api.btRigidBodyConstructionInfo(mass, motionState, geometry, localInertia);
+        const rbConstructionInfo = new api.btRigidBodyConstructionInfo(mass, motionState, cGeometry ?? geometry, localInertia);
         const rigidbody = new api.btRigidBody(rbConstructionInfo);
 
         if (mass > 0) {
             rigidbody.setActivationState(4);
         }
-        rigidbody.setFriction(1);
+        rigidbody.setFriction(0.5);
 
-        if (!rigidbodyRef.current) {
+        if (!rb) {
             context?.world.addRigidBody(rigidbody);
-            rigidbodyRef.current = rigidbody;
+            setRb(rigidbody);
         }
     });
 
-    return [ref];
+    return {
+        ref,
+        rb,
+    };
 }
