@@ -15,13 +15,13 @@ export const AmmoPlayground: GameInstance = {
         const scene = useThree(({scene}) => scene);
 
         useEffect(() => {
-            scene.fog = new FogExp2('lightgray', 0.06);
+            scene.fog = new FogExp2('lightblue', 0.02);
         }, [scene]);
 
         return (
             <AmmoPhysics>
-                <directionalLight castShadow />
-                <ambientLight intensity={0.5} />
+                <directionalLight castShadow position={[10, 10, 10]} />
+                <ambientLight intensity={1} color='lightblue' />
 
                 <AmmoBox
                     mass={10}
@@ -40,18 +40,8 @@ export const AmmoPlayground: GameInstance = {
                 <Player />
 
                 <ConcaveModel
+                    name='sh1_building_13'
                     position={[0, 0, -5]}
-                />
-                <ConcaveModel
-                    position={[0, 0, 5]}
-                    rotation={[0, toRadians(180), 0]}
-                />
-                <ConcaveModel
-                    position={[-16, 0, -5]}
-                />
-                <ConcaveModel
-                    position={[-16, 0, 5]}
-                    rotation={[0, toRadians(180), 0]}
                 />
             </AmmoPhysics>
         )

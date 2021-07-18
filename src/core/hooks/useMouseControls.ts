@@ -1,18 +1,22 @@
-import { WorkerApi } from "@react-three/cannon";
-import { MutableRefObject, useCallback, useEffect } from "react";
-import { Object3D } from "three";
+import Ammo from "ammojs-typed";
+import { useCallback, useEffect } from "react";
 
-export const useMouseControls = (api: WorkerApi, ref: MutableRefObject<Object3D | undefined>) => {
-    api.fixedRotation?.set(true);
+import { AmmoProvider } from "../Ammo/AmmoProvider";
 
-    const mouseEventsHandler = useCallback((e: MouseEvent) => {
-        if(!ref.current) {
+export const useMouseControls = (rb?: Ammo.btRigidBody, camera?: THREE.Camera) => {
+    const mouseEventsHandler = useCallback(async (e: MouseEvent) => {
+        if(!rb) {
             return;
         }
 
-        api.angularVelocity.set(0, -e.movementX / 5, 0);
-        setTimeout(() => api.angularVelocity.set(0, 0, 0), 0);
-    }, [api, ref]);
+        const api = await AmmoProvider.getApi();
+
+        rb.setAngularFactor(new api.btVector3(0, 1, 0));
+        rb.setAngularVelocity(new api.btVector3(0, -e.movementX / 2, 0));
+        rb.setAngularFactor(new api.btVector3(0, 0, 0));
+
+        camera?.rotateY(e.movementX * 200);
+    }, [rb, camera]);
 
     useEffect(() => {
         document.addEventListener('mousemove', mouseEventsHandler);
@@ -20,5 +24,5 @@ export const useMouseControls = (api: WorkerApi, ref: MutableRefObject<Object3D 
         return () => {
             document.removeEventListener('mousemove', mouseEventsHandler);
         }
-    }, [mouseEventsHandler]);
+    }, [mouseEventsHandler, rb, camera]);
 }

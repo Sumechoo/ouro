@@ -6,10 +6,9 @@ import * as THREE from 'three';
 import { BufferGeometry } from "three";
 import { useBox } from "../../../core/Ammo/hooks/useBox";
 
-const url = require('../../../resources/models/sh1_building_12/mesh.obj');
-const textureUrl = require('../../../resources/models/sh1_building_12/texture.png');
-
 interface Props {
+    name: string;
+
     position?: Vector3;
     rotation?: Euler;
 }
@@ -17,10 +16,14 @@ interface Props {
 export const Model: FC<Props> = ({
     position = [0,0,0],
     rotation = [0,0,0],
+    name,
 }) => {
-    const object = useLoader(OBJLoader, url.default) as any;
+    const url = `./assets/models/${name}/mesh.obj`;
+    const textureUrl = `./assets/models/${name}/texture.png`;
+
+    const object = useLoader(OBJLoader, url) as any;
     const geometryData = object.children[0].geometry as BufferGeometry;
-    const [ colorMap ] = useLoader(TextureLoader, [textureUrl.default]);
+    const [ colorMap ] = useLoader(TextureLoader, [textureUrl]);
 
     const {ref} = useBox({mass: 0, size: [1,1,1], position, rotation, geometryData});
 
@@ -33,7 +36,7 @@ export const Model: FC<Props> = ({
             receiveShadow
             geometry={geometryData}
         >
-            <meshStandardMaterial transparent map={colorMap}/>
+            <meshStandardMaterial transparent map={colorMap} roughnessMap={colorMap} />
         </mesh>
     )
 };

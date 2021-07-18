@@ -1,28 +1,41 @@
-import { WorkerApi } from "@react-three/cannon";
 import { useFrame } from "@react-three/fiber";
+import Ammo from "ammojs-typed";
 import { MutableRefObject, useCallback, useEffect } from "react";
 import { Object3D, Vector3 } from "three";
+
+import { AmmoProvider } from "../Ammo/AmmoProvider";
 
 const directionVector = new Vector3(0,0,0);
 const speedVector = new Vector3(0, 0, 0);
 
-export const useKeyboardControls = (api: WorkerApi, ref: MutableRefObject<Object3D | undefined>) => {
+const MOVEMONT_SPEED = 3;
+
+export const useKeyboardControls = (ref: MutableRefObject<Object3D | undefined>, rb?: Ammo.btRigidBody) => {
     const keyDownListener = useCallback((event: KeyboardEvent) => {
         switch(event.key) {
             case 'w':
-                speedVector.z = 1;
+                speedVector.z = -MOVEMONT_SPEED;
                 break;
             case 's':
-                speedVector.z = -1;
+                speedVector.z = MOVEMONT_SPEED;
                 break;
             case 'a':
-                speedVector.x = -0.1;
+                speedVector.x = -MOVEMONT_SPEED;
                 break;
             case 'd':
-                speedVector.x = 0.1;
+                speedVector.x = MOVEMONT_SPEED;
+                break;
+            case ' ':
+                AmmoProvider.getApi()
+                    .then((api) => {
+                        if(rb) {
+                            const velocity = rb.getLinearVelocity();
+                            rb.setLinearVelocity(new api.btVector3(velocity.x(), 4, velocity.z()));
+                        }
+                    })
                 break;
         }
-    }, []);
+    }, [rb]);
 
     const keyUpListener = useCallback((event: KeyboardEvent) => {
         switch(event.key) {
@@ -37,20 +50,22 @@ export const useKeyboardControls = (api: WorkerApi, ref: MutableRefObject<Object
         }
     }, []);
 
-    useFrame(() => {
+    useFrame(async () => {
         if(!ref.current) {
             return;
         }
 
-        const {x, y, z} = ref.current.position;
+        const api = await AmmoProvider.getApi();
+
+        const lastVelocity = rb?.getLinearVelocity();
 
         ref.current.getWorldDirection(directionVector);
 
-        api.position.set(
-            x - (directionVector.x / 4) * speedVector.z,
-            y - (directionVector.y / 4) * speedVector.z,
-            z - (directionVector.z / 4) * speedVector.z,
-        )
+        rb?.setLinearVelocity(new api.btVector3(
+            directionVector.x * speedVector.z,
+            lastVelocity?.y() ?? 0,
+            directionVector.z * speedVector.z,
+        ));
     })
 
     useEffect(() => {
