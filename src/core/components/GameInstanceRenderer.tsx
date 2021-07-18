@@ -1,6 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { CSSProperties, FC, useCallback, useEffect, useState } from "react";
 import { globalConfig } from "../../globalConfig";
+import { CrossDnd } from "../CrossDnd";
 
 import { Splash } from "../scenes/Splash";
 
@@ -23,6 +24,8 @@ const styles = {
     } as CSSProperties,
 }
 
+const lockMouse = () => document.body.requestPointerLock();
+
 export const GameInstanceRenderer: FC<Props> = ({instance}) => {
     const [showSplash, setShowSplash] = useState(true);
     
@@ -33,14 +36,9 @@ export const GameInstanceRenderer: FC<Props> = ({instance}) => {
 
     useEffect(() => {setTimeout(() => setShowSplash(false), globalConfig.SHOW_SPLASH ? 2000 : 0)}, []);
 
-    const lockMouse = useCallback(() => {
-        // alert('mouse lock');
-        document.body.requestPointerLock();
-    }, []);
-
     useEffect(() => {
-        document.addEventListener('click', lockMouse);
-    }, [lockMouse])
+        // document.addEventListener('click', lockMouse);
+    }, [])
 
     if (showSplash) {
         return (
@@ -52,16 +50,18 @@ export const GameInstanceRenderer: FC<Props> = ({instance}) => {
 
     return (
         <div style={styles.absolutePositionStyle}>
-            <Canvas
-                style={styles.absolutePositionStyle}
-                shadows
-                camera={{position: [0, 5, 9], fov: 100}}
-            >
-                <Game />
-            </Canvas>
-            <div style={{...styles.absolutePositionStyle, pointerEvents: 'none'}}>
-                <Ui/>
-            </div>
+            <CrossDnd>
+                <Canvas
+                    style={styles.absolutePositionStyle}
+                    shadows
+                    camera={{position: [0, 5, 9], fov: 100}}
+                >
+                    <Game />
+                </Canvas>
+                <div style={{...styles.absolutePositionStyle, pointerEvents: 'none'}}>
+                    <Ui/>
+                </div>
+            </CrossDnd>
         </div>
     )
 }

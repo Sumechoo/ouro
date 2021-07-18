@@ -1,13 +1,12 @@
 import { GameInstance } from "../../core/types";
 import { AmmoPhysics } from "../../core/Ammo/AmmoPhysics";
+import { ConcaveModel } from "../../core/components/ConcaveModel";
 
-import { ConcaveModel } from './components/ConcaveModel';
 import { AmmoBox } from './components/AmmoBox';
 import { Player } from './components/Player';
 import { useThree } from "@react-three/fiber";
 import { FogExp2 } from "three";
 import { useEffect } from "react";
-import { toRadians } from "../../core/utils";
 
 export const AmmoPlayground: GameInstance = {
     Ui: () => null,
@@ -27,21 +26,12 @@ export const AmmoPlayground: GameInstance = {
                     mass={10}
                     position={[0, 5, 0]}
                 />
-                <AmmoBox
-                    mass={10}
-                    position={[0, 6, 0]}
-                />
-
-                <AmmoBox
-                    mass={10}
-                    position={[0, 7, 0]}
-                />
 
                 <Player />
 
                 <ConcaveModel
                     name='sh1_building_13'
-                    position={[0, 0, -5]}
+                    position={[0, 0, -12]}
                 />
             </AmmoPhysics>
         )

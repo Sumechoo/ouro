@@ -1,20 +1,20 @@
 import { Euler, useThree, Vector3 } from "@react-three/fiber";
-import { FC, MutableRefObject, useEffect, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import { PerspectiveCamera } from "three";
 
 interface Props {
     position?: Vector3;
     rotation?: Euler;
-    ref?: MutableRefObject<PerspectiveCamera | undefined>;
+    onSetCameraRef?: (camera: PerspectiveCamera) => void;
 }
 
 export const DefaultCamera: FC<Props> = ({
     position = [0,0,0],
     rotation = [0,0,0],
-    ref,
+    onSetCameraRef,
 }) => {
     const { set } = useThree();
-    const cameraRef = useRef<PerspectiveCamera | undefined>(ref?.current);
+    const cameraRef = useRef<PerspectiveCamera | undefined>();
 
     useEffect(() => {
         if(!cameraRef.current) {
@@ -22,8 +22,12 @@ export const DefaultCamera: FC<Props> = ({
         }
 
         set({camera: cameraRef.current});
+
+        onSetCameraRef && onSetCameraRef(cameraRef.current);
+
         cameraRef.current.aspect = window.innerWidth / window.innerHeight;
-    }, [cameraRef, set])
+        cameraRef.current.matrixWorldNeedsUpdate = true;
+    }, [cameraRef.current, set])
 
     return (
         <perspectiveCamera

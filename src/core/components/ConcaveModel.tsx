@@ -4,7 +4,8 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import * as THREE from 'three';
 import { BufferGeometry } from "three";
-import { useBox } from "../../../core/Ammo/hooks/useBox";
+
+import { useBox } from '../Ammo/hooks/useBox';
 
 interface Props {
     name: string;

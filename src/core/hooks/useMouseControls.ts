@@ -1,9 +1,10 @@
 import Ammo from "ammojs-typed";
-import { useCallback, useEffect } from "react";
+import { MutableRefObject, useCallback, useEffect } from "react";
+import { PerspectiveCamera } from "three";
 
 import { AmmoProvider } from "../Ammo/AmmoProvider";
 
-export const useMouseControls = (rb?: Ammo.btRigidBody, camera?: THREE.Camera) => {
+export const useMouseControls = (rb?: Ammo.btRigidBody, camera?: MutableRefObject<PerspectiveCamera | undefined>) => {
     const mouseEventsHandler = useCallback(async (e: MouseEvent) => {
         if(!rb) {
             return;
@@ -15,7 +16,7 @@ export const useMouseControls = (rb?: Ammo.btRigidBody, camera?: THREE.Camera) =
         rb.setAngularVelocity(new api.btVector3(0, -e.movementX / 2, 0));
         rb.setAngularFactor(new api.btVector3(0, 0, 0));
 
-        camera?.rotateY(e.movementX * 200);
+        camera?.current?.rotateX(-e.movementY / 200);
     }, [rb, camera]);
 
     useEffect(() => {

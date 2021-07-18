@@ -8,22 +8,31 @@ import { AmmoProvider } from "../Ammo/AmmoProvider";
 const directionVector = new Vector3(0,0,0);
 const speedVector = new Vector3(0, 0, 0);
 
-const MOVEMONT_SPEED = 3;
+const MOVEMENT_SPEED = 1.5;
 
-export const useKeyboardControls = (ref: MutableRefObject<Object3D | undefined>, rb?: Ammo.btRigidBody) => {
+interface KeyboardAddon {
+    key: string;
+    action: VoidFunction;
+}
+
+export const useKeyboardControls = (
+    ref: MutableRefObject<Object3D | undefined>,
+    rb?: Ammo.btRigidBody,
+    addons: Array<KeyboardAddon> = [],
+) => {
     const keyDownListener = useCallback((event: KeyboardEvent) => {
         switch(event.key) {
             case 'w':
-                speedVector.z = -MOVEMONT_SPEED;
+                speedVector.z = -MOVEMENT_SPEED;
                 break;
             case 's':
-                speedVector.z = MOVEMONT_SPEED;
+                speedVector.z = MOVEMENT_SPEED;
                 break;
             case 'a':
-                speedVector.x = -MOVEMONT_SPEED;
+                speedVector.x = -MOVEMENT_SPEED;
                 break;
             case 'd':
-                speedVector.x = MOVEMONT_SPEED;
+                speedVector.x = MOVEMENT_SPEED;
                 break;
             case ' ':
                 AmmoProvider.getApi()

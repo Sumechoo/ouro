@@ -20,15 +20,15 @@ export const Player: FC = () => {
                     rb.setFriction(0);
                 }
             })
-    }, [rb])
+    }, [rb]);
 
-    useMouseControls(rb, cameraRef.current);
+    useMouseControls(rb, cameraRef);
     useKeyboardControls(ref, rb);
 
     return (
         <mesh ref={ref} >
             <DefaultCamera
-                ref={cameraRef}
+                onSetCameraRef={(camera) => cameraRef.current = camera}
                 position={[0, 2, 0]}
                 rotation={[0, 0, 0]}
             />

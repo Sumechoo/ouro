@@ -1,6 +1,7 @@
 import { Vector3 } from "@react-three/fiber";
 import { FC } from "react";
 import { useBox } from "../../../core/Ammo/hooks/useBox";
+import { useDnD } from "../../../core/CrossDnd/hooks/useDnD";
 
 interface Props {
     mass?: number;
@@ -16,8 +17,15 @@ export const AmmoBox: FC<Props> = ({
 }) => {
     const {ref} = useBox({mass, size, position});
 
+    const [startDrag] = useDnD(ref);
+
     return (
-        <mesh ref={ref} castShadow receiveShadow>
+        <mesh
+            ref={ref}
+            castShadow
+            receiveShadow
+            onPointerDown={startDrag}
+        >
             <boxGeometry />
             <meshPhysicalMaterial color={mass > 0 ? 'red' : 'blue'} />
 
