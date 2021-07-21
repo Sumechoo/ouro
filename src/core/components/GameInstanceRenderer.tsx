@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber";
-import { CSSProperties, FC, useCallback, useEffect, useState } from "react";
+import { CSSProperties, FC, useEffect, useState } from "react";
 import { globalConfig } from "../../globalConfig";
-import { CrossDnd } from "../CrossDnd";
+import { LevelEditorUI } from "../components/LevelEditor/LevelEditorUI";
 
 import { Splash } from "../scenes/Splash";
 
@@ -11,17 +11,22 @@ interface Props {
     instance: GameInstance;
 }
 
-const styles = {
+const styles: Record<string, CSSProperties> = {
     previewContainer: {
         position: 'absolute',
-    } as CSSProperties,
+    },
     absolutePositionStyle: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+    },
+    fullScreen: {
         position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
-    } as CSSProperties,
+    }
 }
 
 const lockMouse = () => document.body.requestPointerLock();
@@ -49,19 +54,20 @@ export const GameInstanceRenderer: FC<Props> = ({instance}) => {
     }
 
     return (
-        <div style={styles.absolutePositionStyle}>
-            <CrossDnd>
-                <Canvas
-                    style={styles.absolutePositionStyle}
-                    shadows
-                    camera={{position: [0, 5, 9], fov: 100}}
-                >
-                    <Game />
-                </Canvas>
-                <div style={{...styles.absolutePositionStyle, pointerEvents: 'none'}}>
-                    <Ui/>
-                </div>
-            </CrossDnd>
+        <div style={styles.fullScreen}>
+            <Canvas
+                style={styles.fullScreen}
+                shadows
+                camera={{position: [0, 5, 9], fov: 100}}
+            >
+                <Game />
+            </Canvas>
+            <div
+                style={{...styles.absolutePositionStyle}}
+            >
+                <LevelEditorUI />
+                <Ui/>
+            </div>
         </div>
     )
 }

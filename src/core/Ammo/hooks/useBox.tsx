@@ -47,16 +47,51 @@ export const useBox = (props: Props) => {
 
     useEffect(() => {
         if (ref) {
-            ref.current.scale.set(size[0], size[1], size[2]);
+            ref.current?.scale.set(size[0], size[1], size[2]);
         }
+
+        AmmoProvider.getApi().then((api) => {
+            if (rb) {
+                return;
+            }
+
+            const tempVec = new api.btVector3(size[0] / 2, size[1] / 2, size[2] / 2);
+            const geometry = new api.btBoxShape(tempVec);
+            const transform = new api.btTransform();
+            const rEuler = new THREE.Euler(rotation[0], rotation[1], rotation[2]);
+            const rQuart = new THREE.Quaternion().setFromEuler(rEuler, true);
+    
+    
+            let cGeometry = geometryData && createTriangleShapeByBufferGeometry(api, geometryData, 1);
+    
+            transform.setIdentity();
+            transform.setRotation(new api.btQuaternion(rQuart.x, rQuart.y, rQuart.z, rQuart.w));
+            transform.setOrigin(new api.btVector3(position[0], position[1], position[2]));
+    
+            const motionState = new api.btDefaultMotionState(transform);
+            const localInertia = new api.btVector3(0,0,0);
+    
+            geometry.calculateLocalInertia(mass, localInertia);
+            const rbConstructionInfo = new api.btRigidBodyConstructionInfo(mass, motionState, cGeometry ?? geometry, localInertia);
+            const rigidbody = new api.btRigidBody(rbConstructionInfo);
+    
+            if (mass > 0) {
+                rigidbody.setActivationState(4);
+            }
+            rigidbody.setFriction(0.5);
+    
+            context?.world.addRigidBody(rigidbody);
+            setRb(rigidbody);
+        });
 
         return () => {
             if (rb) {
                 context?.world.removeRigidBody(rb);
+
                 setRb(undefined);
             }
         }
-    }, [ref, context, size, rb]);
+    }, [ref, context, size, rb, geometryData, mass, position, rotation]);
 
     useFrame(() => {
         const motionState = rb?.getMotionState();
@@ -68,38 +103,6 @@ export const useBox = (props: Props) => {
             var q = TRANSFORM_AUX.getRotation();
             ref.current.position.set(p.x(), p.y(), p.z());
             ref.current.quaternion.set(q.x(), q.y(), q.z(), q.w());
-        }
-    });
-
-    AmmoProvider.getApi().then((api) => {
-        const tempVec = new api.btVector3(size[0] / 2, size[1] / 2, size[2] / 2);
-        const geometry = new api.btBoxShape(tempVec);
-        const transform = new api.btTransform();
-        const rEuler = new THREE.Euler(rotation[0], rotation[1], rotation[2]);
-        const rQuart = new THREE.Quaternion().setFromEuler(rEuler, true);
-
-
-        let cGeometry = geometryData && createTriangleShapeByBufferGeometry(api, geometryData, 1);
-
-        transform.setIdentity();
-        transform.setRotation(new api.btQuaternion(rQuart.x, rQuart.y, rQuart.z, rQuart.w));
-        transform.setOrigin(new api.btVector3(position[0], position[1], position[2]));
-
-        const motionState = new api.btDefaultMotionState(transform);
-        const localInertia = new api.btVector3(0,0,0);
-
-        geometry.calculateLocalInertia(mass, localInertia);
-        const rbConstructionInfo = new api.btRigidBodyConstructionInfo(mass, motionState, cGeometry ?? geometry, localInertia);
-        const rigidbody = new api.btRigidBody(rbConstructionInfo);
-
-        if (mass > 0) {
-            rigidbody.setActivationState(4);
-        }
-        rigidbody.setFriction(0.5);
-
-        if (!rb) {
-            context?.world.addRigidBody(rigidbody);
-            setRb(rigidbody);
         }
     });
 

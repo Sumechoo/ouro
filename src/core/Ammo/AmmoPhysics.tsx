@@ -4,6 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import Ammo from 'ammojs-typed';
 
 import { AmmoProvider } from "./AmmoProvider";
+import { useLevelEditor } from "../components/LevelEditor/useLevelEditor";
 
 const clock = new THREE.Clock(true);
 
@@ -28,10 +29,11 @@ interface AmmoContextValue {
 export const AmmoPhysicsContext = createContext<null | AmmoContextValue>(null);
 
 export const AmmoPhysics: FC = ({ children }) => {
+    const {isEnabled} = useLevelEditor();
     const [contextValue, setContextValue] = useState<AmmoContextValue | null>(null);
 
     useFrame(() => {
-        if (contextValue) {
+        if (contextValue && !isEnabled) {
             contextValue.world.stepSimulation(clock.getDelta(), 10);
         }
     })

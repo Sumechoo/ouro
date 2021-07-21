@@ -1,23 +1,18 @@
 import { FC, Suspense } from "react";
-import { Euler, useLoader, Vector3 } from "@react-three/fiber";
+import { useLoader } from "@react-three/fiber";
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import * as THREE from 'three';
 import { BufferGeometry } from "three";
 
 import { useBox } from '../Ammo/hooks/useBox';
+import { ObjectProps } from "./LevelEditor/LevelContainer";
 
-interface Props {
-    name: string;
-
-    position?: Vector3;
-    rotation?: Euler;
-}
-
-export const Model: FC<Props> = ({
+export const Model: FC<ObjectProps> = ({
     position = [0,0,0],
     rotation = [0,0,0],
     name,
+    onEditorClick,
 }) => {
     const url = `./assets/models/${name}/mesh.obj`;
     const textureUrl = `./assets/models/${name}/texture.png`;
@@ -36,13 +31,14 @@ export const Model: FC<Props> = ({
             castShadow
             receiveShadow
             geometry={geometryData}
+            onClick={onEditorClick}
         >
             <meshStandardMaterial transparent map={colorMap} roughnessMap={colorMap} />
         </mesh>
     )
 };
 
-export const ConcaveModel: FC<Props> = (props) => {
+export const ConcaveModel: FC<ObjectProps> = (props) => {
     return (
         <Suspense fallback={null}>
             <Model {...props} />

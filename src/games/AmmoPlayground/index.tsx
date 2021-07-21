@@ -1,16 +1,17 @@
 import { GameInstance } from "../../core/types";
 import { AmmoPhysics } from "../../core/Ammo/AmmoPhysics";
-import { ConcaveModel } from "../../core/components/ConcaveModel";
+import { LevelContainer } from "../../core/components/LevelEditor/LevelContainer";
 
-import { AmmoBox } from './components/AmmoBox';
 import { Player } from './components/Player';
 import { useThree } from "@react-three/fiber";
 import { FogExp2 } from "three";
 import { useEffect } from "react";
+import { useLevelEditor } from "../../core/components/LevelEditor/useLevelEditor";
 
 export const AmmoPlayground: GameInstance = {
     Ui: () => null,
     Game: () => {
+        const {isEnabled, configs} = useLevelEditor();
         const scene = useThree(({scene}) => scene);
 
         useEffect(() => {
@@ -22,17 +23,11 @@ export const AmmoPlayground: GameInstance = {
                 <directionalLight castShadow position={[10, 10, 10]} />
                 <ambientLight intensity={1} color='lightblue' />
 
-                <AmmoBox
-                    mass={10}
-                    position={[0, 5, 0]}
+                <LevelContainer
+                    configs={configs}
                 />
 
-                <Player />
-
-                <ConcaveModel
-                    name='sh1_building_13'
-                    position={[0, 0, -12]}
-                />
+                {!isEnabled && <Player />}
             </AmmoPhysics>
         )
     }
