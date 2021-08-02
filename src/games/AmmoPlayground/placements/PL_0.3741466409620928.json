@@ -1,0 +1,24 @@
+[
+    {
+        "component": "AmmoBox",
+        "props": {
+            "position": [
+                0,
+                5,
+                0
+            ],
+            "mass": 10
+        }
+    },
+    {
+        "component": "ConcaveModel",
+        "props": {
+            "name": "test",
+            "position": [
+                0,
+                0,
+                0
+            ]
+        }
+    }
+]

@@ -33,7 +33,7 @@ export const Model: FC<ObjectProps> = ({
             geometry={geometryData}
             onClick={onEditorClick}
         >
-            <meshStandardMaterial transparent map={colorMap} roughnessMap={colorMap} />
+            <meshStandardMaterial transparent map={colorMap} roughnessMap={colorMap} side={THREE.DoubleSide} />
         </mesh>
     )
 };

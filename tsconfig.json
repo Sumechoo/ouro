@@ -3,6 +3,9 @@
     "./src/**/*",
     "src/declarations"
   ],
+  "exclude": [
+    "globals"
+  ],
   "compilerOptions": {
     "strict": true,
     "esModuleInterop": true,

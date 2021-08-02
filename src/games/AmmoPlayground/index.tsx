@@ -15,13 +15,13 @@ export const AmmoPlayground: GameInstance = {
         const scene = useThree(({scene}) => scene);
 
         useEffect(() => {
-            scene.fog = new FogExp2('lightblue', 0.02);
+            scene.fog = new FogExp2('gray', 0.05);
         }, [scene]);
 
         return (
             <AmmoPhysics>
-                <directionalLight castShadow position={[10, 10, 10]} />
-                <ambientLight intensity={1} color='lightblue' />
+                <directionalLight position={[10, 10, 10]} />
+                <ambientLight intensity={0.2} color='white' />
 
                 <LevelContainer
                     configs={configs}

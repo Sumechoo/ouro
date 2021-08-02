@@ -32,9 +32,6 @@ export const Player: FC = () => {
                 position={[0, 2, 0]}
                 rotation={[0, 0, 0]}
             />
-
-            <boxBufferGeometry />
-            <meshPhysicalMaterial color='green' />
         </mesh>
     );
 }

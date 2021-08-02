@@ -42,7 +42,7 @@ export const GameInstanceRenderer: FC<Props> = ({instance}) => {
     useEffect(() => {setTimeout(() => setShowSplash(false), globalConfig.SHOW_SPLASH ? 2000 : 0)}, []);
 
     useEffect(() => {
-        // document.addEventListener('click', lockMouse);
+        document.getElementById('mainCanvas')?.addEventListener('click', lockMouse);
     }, [])
 
     if (showSplash) {
@@ -55,19 +55,16 @@ export const GameInstanceRenderer: FC<Props> = ({instance}) => {
 
     return (
         <div style={styles.fullScreen}>
-            <Canvas
-                style={styles.fullScreen}
-                shadows
-                camera={{position: [0, 5, 9], fov: 100}}
-            >
-                <Game />
-            </Canvas>
-            <div
-                style={{...styles.absolutePositionStyle}}
-            >
-                <LevelEditorUI />
+            <LevelEditorUI>
+                <Canvas
+                    id="mainCanvas"
+                    shadows
+                    camera={{position: [0, 5, 9], fov: 100}}
+                >
+                    <Game />
+                </Canvas>
                 <Ui/>
-            </div>
+            </LevelEditorUI>
         </div>
     )
 }
