@@ -3,36 +3,13 @@ import {Button, Card, CardContent, CardHeader, Grid, makeStyles, TextField} from
 import axios from "axios";
 
 import { useLevelEditor } from "./useLevelEditor";
-import { PlacementConfig } from "./LevelContainer";
 import { PlacementsSelector } from "./PlacementsSelector";
 import { GLOBALS } from "../../../globals";
-
-const basicConfig: PlacementConfig[] = [
-    {
-        component: 'AmmoBox',
-        props: {
-            position: [0, 5, 0],
-            mass: 10,
-        }
-    },
-    {
-        "component": "ConcaveModel",
-        "props": {
-          "name": "scp",
-          "position": [
-            0,
-            0,
-            0
-          ]
-        }
-      }
-];
-
 
 export const LevelEditorUI: FC = ({children}) => {
     const classes = useStyles();
 
-    const {isEnabled, toggle, configs, setPlacementConfigs, index, setIndex} = useLevelEditor();
+    const {isEnabled, toggle, configs, setPlacementConfigs, index} = useLevelEditor();
     const [value, setValue] = useState('');
 
     useEffect(() => {
@@ -42,18 +19,11 @@ export const LevelEditorUI: FC = ({children}) => {
     }, [configs, index]);
 
     const applyChanges = useCallback(() => {
-        const newConfigs = [...configs];
+        const newConfigs = {...configs};
 
         newConfigs[index] = JSON.parse(value);
         setPlacementConfigs(newConfigs);
     }, [configs, index, setPlacementConfigs, value]);
-
-    const addPlacement = useCallback(() => {
-        const newConfigs = [...configs, {...basicConfig[0]}];
-
-        setPlacementConfigs(newConfigs);
-        setIndex(newConfigs.length - 1);
-    }, [configs, setPlacementConfigs, setIndex]);
 
     const onSave = useCallback(() => {
         axios.post(`${GLOBALS.EDITOR_URL}/placements`, configs);
@@ -77,9 +47,7 @@ export const LevelEditorUI: FC = ({children}) => {
 
                         <Button variant="contained" onClick={toggle}>{isEnabled ? '▶️' : '🛑'}</Button>
                         <TextField multiline value={value} onChange={(e) => setValue(e.target.value)} />
-                        <Button color='primary' variant="contained" onClick={addPlacement}>Add placement</Button>
                         <Button variant="contained" onClick={applyChanges}>Apply changes</Button>
-                        <Button variant="contained" onClick={() => setPlacementConfigs(basicConfig)}>Apply basic config</Button>
                     </Grid>
                 </CardContent>
             </Card>

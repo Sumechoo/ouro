@@ -1,0 +1,45 @@
+{
+    "statics": [
+        {
+            "component": "ConcaveModel",
+            "props": {
+                "name": "gipt",
+                "position": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "component": "Sprite",
+            "props": {
+                "position": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "component": "Sprite",
+            "props": {
+                "position": [
+                    0,
+                    1,
+                    0
+                ]
+            }
+        },
+        {
+            "component": "Sprite",
+            "props": {
+                "position": [
+                    0,
+                    2,
+                    0
+                ]
+            }
+        }
+    ]
+}

@@ -7,22 +7,24 @@ import { useThree } from "@react-three/fiber";
 import { FogExp2 } from "three";
 import { useEffect } from "react";
 import { useLevelEditor } from "../../core/components/LevelEditor/useLevelEditor";
+import { HUD } from "./UI/HUD";
 
 export const AmmoPlayground: GameInstance = {
-    Ui: () => null,
+    Ui: () => (
+        <div>
+            <HUD />
+        </div>
+    ),
     Game: () => {
         const {isEnabled, configs} = useLevelEditor();
         const scene = useThree(({scene}) => scene);
 
         useEffect(() => {
-            scene.fog = new FogExp2('gray', 0.05);
+            scene.fog = new FogExp2('orange', 0.015);
         }, [scene]);
 
         return (
             <AmmoPhysics>
-                <directionalLight position={[10, 10, 10]} />
-                <ambientLight intensity={0.2} color='white' />
-
                 <LevelContainer
                     configs={configs}
                 />

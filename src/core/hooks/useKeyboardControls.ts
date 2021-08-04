@@ -10,7 +10,7 @@ const speedVector = new Vector3(0, 0, 0);
 
 const MOVEMENT_SPEED = 1.5;
 
-interface KeyboardAddon {
+export interface KeyboardAddon {
     key: string;
     action: VoidFunction;
 }
@@ -43,8 +43,15 @@ export const useKeyboardControls = (
                         }
                     })
                 break;
+            default:
+                addons.forEach(({key, action}) => {
+                    if (event.key === key) {
+                        action();
+                    }
+                });
+                break;
         }
-    }, [rb]);
+    }, [addons, rb]);
 
     const keyUpListener = useCallback((event: KeyboardEvent) => {
         switch(event.key) {

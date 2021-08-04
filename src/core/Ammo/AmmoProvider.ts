@@ -10,4 +10,8 @@ export class AmmoProvider {
 
         return AmmoProvider.api;
     }
+
+    public static getApiSync() {
+        return AmmoProvider.api;
+    }
 }

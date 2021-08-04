@@ -6,7 +6,7 @@ import { Button, FormControl, InputLabel, MenuItem, Select } from "@material-ui/
 import { PlacementConfig } from "./LevelContainer";
 
 interface Props {
-    onPlacementLoad: (placement: PlacementConfig[]) => void;
+    onPlacementLoad: (placement: PlacementConfig) => void;
     onSave: (name: string) => void;
 }
 
@@ -45,7 +45,7 @@ export const PlacementsSelector: FC<Props> = ({
                     onChange={onChange}
                 >
                     {placements.map((name) => (
-                        <MenuItem value={name}>{name}</MenuItem>
+                        <MenuItem key={name} value={name}>{name}</MenuItem>
                     ))}
                 </Select>
             </FormControl>
