@@ -89,7 +89,8 @@
     "typescript": "4.1.3"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "editor": "node editorServer/index.js",
+    "start": "node scripts/start.js & yarn editor",
     "build": "node scripts/build.js && npx gulp && rm -rf ./build/static",
     "test": "node scripts/test.js --env=jsdom"
   },

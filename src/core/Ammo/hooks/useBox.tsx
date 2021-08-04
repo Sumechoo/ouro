@@ -61,7 +61,6 @@ export const useBox = (props: Props) => {
             const rEuler = new THREE.Euler(rotation[0], rotation[1], rotation[2]);
             const rQuart = new THREE.Quaternion().setFromEuler(rEuler, true);
     
-    
             let cGeometry = geometryData && createTriangleShapeByBufferGeometry(api, geometryData, 1);
     
             transform.setIdentity();
@@ -77,6 +76,7 @@ export const useBox = (props: Props) => {
     
             if (mass > 0) {
                 rigidbody.setActivationState(4);
+                ref.current.userData.interactive = true;
             }
             rigidbody.setFriction(0.5);
     

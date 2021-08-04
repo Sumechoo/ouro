@@ -8,6 +8,8 @@ const app = express();
 
 app.use(json());
 
+const PLACEMENTS_PATH = 'src/games/AmmoPlayground/placements';
+
 const enhanceWithNoCors = (endpoint, method = 'get', callback) => {
     app.options(endpoint, (req, res) => {
         res
@@ -24,7 +26,7 @@ const enhanceWithNoCors = (endpoint, method = 'get', callback) => {
 }
 
 enhanceWithNoCors('/placements/list', 'get', (req, res) => {
-    const files = fs.readdirSync('../src/games/AmmoPlayground/placements');
+    const files = fs.readdirSync(PLACEMENTS_PATH);
 
     res.send(files);
 });
@@ -32,7 +34,7 @@ enhanceWithNoCors('/placements/list', 'get', (req, res) => {
 enhanceWithNoCors('/placements/', 'get', (req, res) => {
     const {placementName} = req.query;
 
-    const file = fs.readFileSync(`../src/games/AmmoPlayground/placements/${placementName}`);
+    const file = fs.readFileSync(`${PLACEMENTS_PATH}/${placementName}`);
 
     res.send(file);
 });
@@ -41,7 +43,7 @@ enhanceWithNoCors('/placements/', 'post', (req, res) => {
     const newName = `PL_${Math.random()}.json`;
 
     try {
-        fs.writeFileSync(`../src/games/AmmoPlayground/placements/${newName}`, JSON.stringify(req.body, null, 4));
+        fs.writeFileSync(`${PLACEMENTS_PATH}/${newName}`, JSON.stringify(req.body, null, 4));
         res.send(true);
     } catch {
         res.send(false);

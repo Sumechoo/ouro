@@ -7,6 +7,7 @@ import { DefaultCamera } from "../../../core/components/DefaultCamera";
 
 import { useKeyboardControls } from "../../../core/hooks/useKeyboardControls";
 import { useMouseControls } from "../../../core/hooks/useMouseControls";
+import { useRaycaster } from "../../../core/hooks/useRaycaster";
 
 export const Player: FC = () => {
     const {ref, rb} = useBox({mass: 1, size: [0.5,0.5,0.5], position: [1, 1, 1]});
@@ -24,6 +25,7 @@ export const Player: FC = () => {
 
     useMouseControls(rb, cameraRef);
     useKeyboardControls(ref, rb);
+    useRaycaster(cameraRef);
 
     return (
         <mesh ref={ref} >
