@@ -9,7 +9,7 @@ import { GLOBALS } from "../../../globals";
 export const LevelEditorUI: FC = ({children}) => {
     const classes = useStyles();
 
-    const {isEnabled, toggle, configs, setPlacementConfigs, index} = useLevelEditor();
+    const {isEnabled, toggle, configs, setPlacementConfigs, index, currentDynamics} = useLevelEditor();
     const [value, setValue] = useState('');
 
     useEffect(() => {
@@ -26,8 +26,8 @@ export const LevelEditorUI: FC = ({children}) => {
     }, [configs, index, setPlacementConfigs, value]);
 
     const onSave = useCallback(() => {
-        axios.post(`${GLOBALS.EDITOR_URL}/placements`, configs);
-    }, [configs]);
+        axios.post(`${GLOBALS.EDITOR_URL}/placements`, {...configs, dynamics: currentDynamics});
+    }, [configs, currentDynamics]);
     
     return (
         <div className={classes.container}>

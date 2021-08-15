@@ -3,7 +3,7 @@ import Axios from 'axios';
 
 import {GLOBALS} from '../../../globals';
 import { Button, FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
-import { PlacementConfig } from "./LevelContainer";
+import { PlacementConfig } from "./types";
 
 interface Props {
     onPlacementLoad: (placement: PlacementConfig) => void;

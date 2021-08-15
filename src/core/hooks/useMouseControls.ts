@@ -14,7 +14,6 @@ export const useMouseControls = (rb?: Ammo.btRigidBody, camera?: MutableRefObjec
 
         rb.setAngularFactor(new api.btVector3(0, 1, 0));
         rb.setAngularVelocity(new api.btVector3(0, -e.movementX / 2, 0));
-        rb.setAngularFactor(new api.btVector3(0, 0, 0));
         rb.setFriction(0);
 
         camera?.current?.rotateX(-e.movementY / 200);

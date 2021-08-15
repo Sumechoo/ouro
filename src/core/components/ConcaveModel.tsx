@@ -2,11 +2,10 @@ import { FC, Suspense } from "react";
 import { useLoader } from "@react-three/fiber";
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { TextureLoader } from "three/src/loaders/TextureLoader";
-import * as THREE from 'three';
-import { BufferGeometry } from "three";
+import { BufferGeometry, DoubleSide, NearestFilter } from "three";
 
-import { useBox } from '../Ammo/hooks/useBox';
-import { ObjectProps } from "./LevelEditor/LevelContainer";
+import { useCollision } from '../Ammo/hooks/useCollision';
+import { ObjectProps } from "./LevelEditor/types";
 
 export const Model: FC<ObjectProps> = ({
     position = [0,0,0],
@@ -21,9 +20,9 @@ export const Model: FC<ObjectProps> = ({
     const geometryData = object.children[0].geometry as BufferGeometry;
     const [ colorMap ] = useLoader(TextureLoader, [textureUrl]);
 
-    const {ref} = useBox({mass: 0, size: [1,1,1], position, rotation, geometryData});
+    const {ref} = useCollision({mass: 0, size: [1,1,1], position, rotation, geometryData});
 
-    colorMap.magFilter = THREE.NearestFilter;
+    colorMap.magFilter = NearestFilter;
 
     return (
         <mesh
@@ -33,11 +32,11 @@ export const Model: FC<ObjectProps> = ({
             geometry={geometryData}
             onClick={onEditorClick}
         >
-            <meshStandardMaterial
-                flatShading={false}
+            <meshPhysicalMaterial
                 transparent
                 map={colorMap}
-                side={THREE.DoubleSide}
+                roughnessMap={colorMap}
+                side={DoubleSide}
             />
         </mesh>
     )

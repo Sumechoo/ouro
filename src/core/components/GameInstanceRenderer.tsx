@@ -1,10 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import { Canvas } from "@react-three/fiber";
-import { CSSProperties, FC, useEffect, useState } from "react";
-import { globalConfig } from "../../globalConfig";
+import { FC, useEffect } from "react";
 import { LevelEditorUI } from "../components/LevelEditor/LevelEditorUI";
-
-import { Splash } from "../scenes/Splash";
 
 import { GameInstance } from "../types";
 import { useLevelEditor } from "./LevelEditor/useLevelEditor";
@@ -46,7 +43,6 @@ const lockMouse = () => document.body.requestPointerLock();
 
 export const GameInstanceRenderer: FC<Props> = ({instance}) => {
     const classes = useStyles();
-    const [showSplash, setShowSplash] = useState(true);
     const {isEnabled} = useLevelEditor();
     
     const {
@@ -54,19 +50,9 @@ export const GameInstanceRenderer: FC<Props> = ({instance}) => {
         Ui,
     } = instance;
 
-    useEffect(() => {setTimeout(() => setShowSplash(false), globalConfig.SHOW_SPLASH ? 2000 : 0)}, []);
-
     useEffect(() => {
-        document.getElementById('mainCanvas')?.addEventListener('click', lockMouse);
+        // document.addEventListener('click', lockMouse);
     }, [])
-
-    if (showSplash) {
-        return (
-            <Canvas className={classes.absolutePositionStyle} shadows camera={{position: [10, 10, 10]}}>
-                <Splash />
-            </Canvas>
-        )
-    }
 
     return (
         <div className={classes.fullScreen}>

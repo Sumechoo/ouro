@@ -1,13 +1,21 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Card, Button } from "@material-ui/core";
 import { FC } from "react";
+
 import { useRaycasterState } from "../../../core/hooks/useRaycaster";
+import { useInventoryState } from "../hooks/useInventoryState";
 
 export const HUD: FC = () => {
     const classes = useStyles();
     const {activeObject} = useRaycasterState();
+    const {items} = useInventoryState();
 
     return (
-        <div className={classes.container}>.{activeObject && activeObject.id}</div>
+        <div>
+            <div className={classes.container}>.{activeObject && 'Press "E" to pickup'}</div>
+            <Card>
+                {items.map((item, index) => <Button key={index}>{item.component}</Button>)}
+            </Card>
+        </div>
     );
 }
 

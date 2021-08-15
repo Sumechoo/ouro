@@ -30,15 +30,17 @@ interface Props {
     size: Vector3;
     position: Vector3;
     rotation?: Euler;
+    lockRotation?: boolean;
     geometryData?: THREE.BufferGeometry;
 }
 
-export const useBox = (props: Props) => {
+export const useCollision = (props: Props) => {
     const {
         mass = 0,
         size = [1,1,1],
         position = [0,0,0],
         rotation = [0,0,0],
+        lockRotation,
         geometryData,
     } = props;
     const ref = useRef(new THREE.Object3D());
@@ -46,8 +48,9 @@ export const useBox = (props: Props) => {
     const context = useContext(AmmoPhysicsContext);
 
     useEffect(() => {
-        if (ref) {
-            ref.current?.scale.set(size[0], size[1], size[2]);
+        if (ref.current) {
+            ref.current.scale.set(size[0], size[1], size[2]);
+            ref.current.userData.dynamic = mass > 0;
         }
 
         const api = AmmoProvider.getApiSync();
@@ -79,6 +82,10 @@ export const useBox = (props: Props) => {
 
             rigidbody.setFriction(0.5);
 
+            if (lockRotation) {
+                rigidbody.setAngularFactor(new api.btVector3(0, 0, 0));
+            }
+
             context?.world.addRigidBody(rigidbody);
             setRb(rigidbody);
         }
@@ -86,7 +93,7 @@ export const useBox = (props: Props) => {
         return () => {
             
         }
-    }, [ref, context, size, rb, geometryData, mass, position, rotation]);
+    }, [ref, context, size, rb, geometryData, mass, position, rotation, lockRotation]);
 
     useEffect(() => () => {
         if (rb) {

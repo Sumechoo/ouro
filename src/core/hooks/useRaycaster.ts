@@ -36,8 +36,9 @@ export const useRaycaster = (camera: RefObject<Camera | undefined>) => {
 
         if (intersectionObject) {
             const isDifferent = previousRef.current !== intersectionObject;
+            const isDynamic = intersectionObject.userData.dynamic;
 
-            if (isDifferent) {
+            if (isDifferent && isDynamic) {
                 previousRef.current && (previousRef.current.userData.active = false);
                 previousRef.current = intersectionObject;
                 previousRef.current.userData.active = true;
