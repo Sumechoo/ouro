@@ -35,7 +35,6 @@ export const Model: FC<ObjectProps> = ({
             <meshPhysicalMaterial
                 transparent
                 map={colorMap}
-                roughnessMap={colorMap}
                 side={DoubleSide}
             />
         </mesh>

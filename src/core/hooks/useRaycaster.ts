@@ -1,7 +1,6 @@
 import { useFrame, useThree } from '@react-three/fiber';
-import { Camera } from '@react-three/fiber/dist/declarations/src/core/events';
-import { RefObject, useRef } from 'react';
-import { Vector2, Raycaster, Object3D } from 'three';
+import { RefObject, useRef, useState } from 'react';
+import { Vector2, Raycaster, Object3D, Camera } from 'three';
 import create from 'zustand';
 
 const ZERO_2d = new Vector2(0,0);
@@ -16,11 +15,11 @@ export const useRaycasterState = create<RaycasterState>((set) => ({
     setActiveObject: (activeObject) => set({activeObject}),
 }));
 
-export const useRaycaster = (camera: RefObject<Camera | undefined>) => {
+export const useRaycaster = (camera: RefObject<Camera | undefined>, watchForStatic = false) => {
     const previousRef = useRef<Object3D>();
     const intersectTargets = useThree(({scene}) => scene.children);
     const raycasterRef = useRef(new Raycaster());
-    const {setActiveObject} = useRaycasterState();
+    const [activeObject, setActiveObject] = useState<Object3D>();
 
     raycasterRef.current.far = 1.6;
 
@@ -36,7 +35,7 @@ export const useRaycaster = (camera: RefObject<Camera | undefined>) => {
 
         if (intersectionObject) {
             const isDifferent = previousRef.current !== intersectionObject;
-            const isDynamic = intersectionObject.userData.dynamic;
+            const isDynamic = watchForStatic || intersectionObject.userData.dynamic;
 
             if (isDifferent && isDynamic) {
                 previousRef.current && (previousRef.current.userData.active = false);
@@ -51,4 +50,8 @@ export const useRaycaster = (camera: RefObject<Camera | undefined>) => {
             setActiveObject(undefined);
         }
     });
+
+    return {
+        activeObject,
+    }
 }

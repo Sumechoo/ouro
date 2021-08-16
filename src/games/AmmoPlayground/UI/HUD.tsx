@@ -1,5 +1,6 @@
 import { makeStyles, Card, Button } from "@material-ui/core";
 import { FC } from "react";
+import { useDebugState } from "../../../core/hooks/useDebugState";
 
 import { useRaycasterState } from "../../../core/hooks/useRaycaster";
 import { useInventoryState } from "../hooks/useInventoryState";
@@ -11,7 +12,7 @@ export const HUD: FC = () => {
 
     return (
         <div>
-            <div className={classes.container}>.{activeObject && 'Press "E" to pickup'}</div>
+            <div className={classes.container}>{activeObject ? 'o' : '.'}</div>
             <Card>
                 {items.map((item, index) => <Button key={index}>{item.component}</Button>)}
             </Card>

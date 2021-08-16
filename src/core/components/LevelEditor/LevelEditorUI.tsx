@@ -5,12 +5,14 @@ import axios from "axios";
 import { useLevelEditor } from "./useLevelEditor";
 import { PlacementsSelector } from "./PlacementsSelector";
 import { GLOBALS } from "../../../globals";
+import { useDebugState } from "../../hooks/useDebugState";
 
 export const LevelEditorUI: FC = ({children}) => {
     const classes = useStyles();
 
     const {isEnabled, toggle, configs, setPlacementConfigs, index, currentDynamics} = useLevelEditor();
     const [value, setValue] = useState('');
+    const debug = useDebugState();
 
     useEffect(() => {
         if (configs) {
@@ -48,6 +50,7 @@ export const LevelEditorUI: FC = ({children}) => {
                         <Button variant="contained" onClick={toggle}>{isEnabled ? '▶️' : '🛑'}</Button>
                         <TextField multiline value={value} onChange={(e) => setValue(e.target.value)} />
                         <Button variant="contained" onClick={applyChanges}>Apply changes</Button>
+                        <TextField multiline value={JSON.stringify(debug, null, 2)}/>
                     </Grid>
                 </CardContent>
             </Card>

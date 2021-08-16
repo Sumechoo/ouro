@@ -12,6 +12,10 @@ export class AmmoProvider {
     }
 
     public static getApiSync() {
+        if (!AmmoProvider.api) {
+            alert('Api not ready for sync call');
+        }
+
         return AmmoProvider.api;
     }
 }

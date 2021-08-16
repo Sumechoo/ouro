@@ -4,6 +4,7 @@ import { MutableRefObject, useCallback, useEffect } from "react";
 import { Object3D, Vector3 } from "three";
 
 import { AmmoProvider } from "../Ammo/AmmoProvider";
+import { inverseDebounce } from "../utils";
 
 const directionVector = new Vector3(0,0,0);
 const speedVector = new Vector3(0, 0, 0);
@@ -20,6 +21,15 @@ export const useKeyboardControls = (
     rb?: Ammo.btRigidBody,
     addons: Array<KeyboardAddon> = [],
 ) => {
+    const jump = useCallback(inverseDebounce(() => {
+        const api = AmmoProvider.getApiSync();
+
+        if(rb) {
+            const velocity = rb.getLinearVelocity();
+            rb.setLinearVelocity(new api.btVector3(velocity.x(), 4, velocity.z()));
+        }
+    }, 600), [rb]);
+
     const keyDownListener = useCallback((event: KeyboardEvent) => {
         switch(event.key) {
             case 'w':
@@ -35,13 +45,7 @@ export const useKeyboardControls = (
                 speedVector.x = MOVEMENT_SPEED;
                 break;
             case ' ':
-                AmmoProvider.getApi()
-                    .then((api) => {
-                        if(rb) {
-                            const velocity = rb.getLinearVelocity();
-                            rb.setLinearVelocity(new api.btVector3(velocity.x(), 4, velocity.z()));
-                        }
-                    })
+                jump();
                 break;
             default:
                 addons.forEach(({key, action}) => {
@@ -51,7 +55,7 @@ export const useKeyboardControls = (
                 });
                 break;
         }
-    }, [addons, rb]);
+    }, [addons, jump]);
 
     const keyUpListener = useCallback((event: KeyboardEvent) => {
         switch(event.key) {

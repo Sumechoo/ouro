@@ -82,9 +82,7 @@ export const useCollision = (props: Props) => {
 
             rigidbody.setFriction(0.5);
 
-            if (lockRotation) {
-                rigidbody.setAngularFactor(new api.btVector3(0, 0, 0));
-            }
+            rigidbody.setAngularFactor(new api.btVector3(0, lockRotation ? 0 : 1, 0));
 
             context?.world.addRigidBody(rigidbody);
             setRb(rigidbody);
@@ -98,7 +96,6 @@ export const useCollision = (props: Props) => {
     useEffect(() => () => {
         if (rb) {
             context?.world.removeRigidBody(rb);
-
             setRb(undefined);
         }
     }, [context?.world, rb]);

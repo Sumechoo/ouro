@@ -14,8 +14,13 @@ export const Player: FC = () => {
     const cameraRef = useRef<PerspectiveCamera>();
     const {addItem, removeItem, items} = useInventoryState();
 
-    const {activeObject} = useRaycasterState();
-    const {deleteDynamic, addPlacement} = useLevelEditor();
+    const {setActiveObject} = useRaycasterState();
+    const {activeObject} = useRaycaster(cameraRef);
+    const {deleteDynamic, addPlacement, setPlayer} = useLevelEditor();
+
+    useEffect(() => {
+        setActiveObject(activeObject);
+    }, [activeObject, setActiveObject])
 
     const shadowRef = useRef<any>();
     useEffect(() => {
@@ -24,7 +29,13 @@ export const Player: FC = () => {
             shadowRef.current.shadow.mapSize.width = 2048;
             shadowRef.current.shadow.mapSize.height = 2048;
         }
-    }, []);
+
+        setPlayer(ref.current);
+
+        return () => {
+            setPlayer(undefined);
+        }
+    }, [ref, setPlayer]);
 
     const inventoryAddon: KeyboardAddon[] = useMemo(() => [{
         key: 'e',
@@ -51,7 +62,6 @@ export const Player: FC = () => {
 
     useMouseControls(rb, cameraRef);
     useKeyboardControls(ref, rb, inventoryAddon);
-    useRaycaster(cameraRef);
 
     return (
         <mesh ref={ref} >
@@ -60,7 +70,14 @@ export const Player: FC = () => {
                 position={[0, 2, 0]}
                 rotation={[0, 0, 0]}
             />
-            <pointLight ref={shadowRef} castShadow position={[-1, 1, 0]} color='orange' intensity={0.5} distance={15}/>
+            <pointLight
+                ref={shadowRef}
+                castShadow={false}
+                position={[-1, 1, 0]}
+                color='orange'
+                intensity={0.5}
+                distance={15}
+            />
         </mesh>
     );
 }

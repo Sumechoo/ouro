@@ -1,17 +1,20 @@
 import { useLoader } from "@react-three/fiber";
 import { FC, Suspense } from "react";
-import { DoubleSide, NearestFilter, TextureLoader } from "three";
+import { DoubleSide, TextureLoader } from "three";
+
 import { useCollision } from "../Ammo/hooks/useCollision";
+import { useGenetics } from "../hooks/useGenetics";
 import { ObjectProps } from "./LevelEditor/types";
 
 const CreatureSuspended: FC<ObjectProps> = ({
     position = [0,0,0],
+    placement,
 }) => {
-    const {ref} = useCollision({mass: 1, position, size: [2,2,0.2], lockRotation: true});
+    const {ref, rb} = useCollision({mass: 1, position, size: [1,1,0.2], lockRotation: false});
     const textureUrl = `./assets/textures/walker.png`;
     const [ colorMap ] = useLoader(TextureLoader, [textureUrl]);
 
-    colorMap.magFilter = NearestFilter;
+    useGenetics(ref, placement, rb);
 
     return (
         <mesh
