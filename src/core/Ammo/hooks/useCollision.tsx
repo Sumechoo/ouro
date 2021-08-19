@@ -32,6 +32,7 @@ interface Props {
     rotation?: Euler;
     lockRotation?: boolean;
     geometryData?: THREE.BufferGeometry;
+    isTrigger?: boolean;
 }
 
 export const useCollision = (props: Props) => {
@@ -42,6 +43,7 @@ export const useCollision = (props: Props) => {
         rotation = [0,0,0],
         lockRotation,
         geometryData,
+        isTrigger,
     } = props;
     const ref = useRef(new THREE.Object3D());
     const [rb, setRb] = useState<Ammo.btRigidBody>();
@@ -80,8 +82,11 @@ export const useCollision = (props: Props) => {
                 ref.current.userData.interactive = true;
             }
 
-            rigidbody.setFriction(0.5);
+            if (isTrigger) {
+                rigidbody.setCollisionFlags(4);
+            }
 
+            rigidbody.setFriction(0.5);
             rigidbody.setAngularFactor(new api.btVector3(0, lockRotation ? 0 : 1, 0));
 
             context?.world.addRigidBody(rigidbody);
@@ -91,7 +96,7 @@ export const useCollision = (props: Props) => {
         return () => {
             
         }
-    }, [ref, context, size, rb, geometryData, mass, position, rotation, lockRotation]);
+    }, [ref, context, size, rb, geometryData, mass, position, rotation, lockRotation, isTrigger]);
 
     useEffect(() => () => {
         if (rb) {

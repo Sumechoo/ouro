@@ -12,6 +12,7 @@ export const DefaultCamera: FC<Props> = ({
     position = [0,0,0],
     rotation = [0,0,0],
     onSetCameraRef,
+    children,
 }) => {
     const { set, camera } = useThree();
     const [prevCamera, setPrevCamera] = useState<Camera>();
@@ -47,6 +48,8 @@ export const DefaultCamera: FC<Props> = ({
             rotation={rotation}
             fov={90}
             aspect={window.innerWidth / window.innerHeight}
-        />
+        >
+            {children}
+        </perspectiveCamera>
     );
 };

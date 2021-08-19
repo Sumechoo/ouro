@@ -4,6 +4,7 @@ import { emptyFn } from "../../../constants";
 import { ConcaveModel } from "../ConcaveModel";
 import { Pickable } from "../Pickable";
 import { Creature } from "../Creature";
+import { Trigger } from "../Trigger";
 import { ObjectProps } from "./types";
 import { useLevelEditor } from "./useLevelEditor";
 
@@ -11,6 +12,7 @@ export const PlacementsMap: Record<string, FC<ObjectProps>> = {
     ConcaveModel,
     Pickable,
     Creature,
+    Trigger,
 }
 
 export const LevelContainer: FC = () => {

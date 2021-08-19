@@ -10,7 +10,7 @@ const CreatureSuspended: FC<ObjectProps> = ({
     position = [0,0,0],
     placement,
 }) => {
-    const {ref, rb} = useCollision({mass: 1, position, size: [1,1,0.2], lockRotation: false});
+    const {ref, rb} = useCollision({mass: 1, position, size: [1,1,0.3], lockRotation: false});
     const textureUrl = `./assets/textures/walker.png`;
     const [ colorMap ] = useLoader(TextureLoader, [textureUrl]);
 
@@ -22,7 +22,7 @@ const CreatureSuspended: FC<ObjectProps> = ({
             receiveShadow
         >
             <planeBufferGeometry args={[1,1]} />
-            <meshPhysicalMaterial
+            <meshStandardMaterial
                 transparent
                 alphaTest={0.3}
                 side={DoubleSide}
