@@ -3,7 +3,7 @@
         {
             "component": "ConcaveModel",
             "props": {
-                "name": "gipt",
+                "name": "manual",
                 "position": [
                     0,
                     0,
@@ -34,7 +34,7 @@
             }
         },
         {
-            "component": "Trigger",
+            "component": "Portal",
             "props": {
                 "size": [
                     0.2,
@@ -49,7 +49,7 @@
             }
         },
         {
-            "component": "Trigger",
+            "component": "Portal",
             "props": {
                 "size": [
                     0.2,
@@ -64,7 +64,7 @@
             }
         },
         {
-            "component": "Trigger",
+            "component": "Portal",
             "props": {
                 "size": [
                     0.2,
@@ -79,7 +79,7 @@
             }
         },
         {
-            "component": "Trigger",
+            "component": "Portal",
             "props": {
                 "size": [
                     0.2,
@@ -94,7 +94,7 @@
             }
         },
         {
-            "component": "Trigger",
+            "component": "Portal",
             "props": {
                 "size": [
                     0.2,
@@ -109,7 +109,7 @@
             }
         },
         {
-            "component": "Trigger",
+            "component": "Portal",
             "props": {
                 "size": [
                     0.2,
@@ -124,7 +124,7 @@
             }
         },
         {
-            "component": "Trigger",
+            "component": "Portal",
             "props": {
                 "size": [
                     0.2,
@@ -139,7 +139,7 @@
             }
         },
         {
-            "component": "Trigger",
+            "component": "Portal",
             "props": {
                 "size": [
                     0.2,
@@ -154,7 +154,7 @@
             }
         },
         {
-            "component": "Trigger",
+            "component": "Portal",
             "props": {
                 "size": [
                     0.2,
@@ -239,7 +239,7 @@
             }
         },
         {
-            "component": "Trigger",
+            "component": "Portal",
             "props": {
                 "size": [
                     0.2,
@@ -264,7 +264,7 @@
             }
         },
         {
-            "component": "Trigger",
+            "component": "Portal",
             "props": {
                 "size": [
                     0.2,

@@ -29,7 +29,7 @@ export const useLevelEditor = create<EditorState>((set) => ({
     index: 0,
 
     toggle: () => set((state) => ({isEnabled: !state.isEnabled})),
-    setPlacementConfigs: (configs: PlacementConfig) => set({configs, currentDynamics: configs.dynamics ?? []}),
+    setPlacementConfigs: (configs) => set({configs, currentDynamics: configs.dynamics ?? []}),
     setIndex: (index = 0) => set({index}),
     deleteDynamic: (placement) => set((state) => ({currentDynamics: state.currentDynamics.filter((item) => item !== placement)})),
     addPlacement: (placement) => set(({currentDynamics}) => ({currentDynamics: [...currentDynamics, placement]})),

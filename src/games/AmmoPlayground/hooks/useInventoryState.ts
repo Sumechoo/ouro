@@ -14,7 +14,7 @@ export const useInventoryState = create<InventoryState>((set) => ({
     index: 0,
     items: [
         {
-            component: 'Trigger',
+            component: 'Portal',
             props: {
                 size: [0.2, 1, 1]
             },

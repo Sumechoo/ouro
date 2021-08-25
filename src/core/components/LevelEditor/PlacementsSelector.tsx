@@ -1,9 +1,9 @@
 import { ChangeEvent, FC, Fragment, useCallback, useEffect, useState } from "react";
-import Axios from 'axios';
 
-import {GLOBALS} from '../../../globals';
 import { Button, FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 import { PlacementConfig } from "./types";
+import { getPlacementsList } from "../../api/getPlacementsList";
+import { getPlacement } from "../../api/getPlacement";
 
 interface Props {
     onPlacementLoad: (placement: PlacementConfig) => void;
@@ -18,17 +18,15 @@ export const PlacementsSelector: FC<Props> = ({
     const [placements, setPlacements] = useState<string[]>([]);
 
     useEffect(() => {
-        Axios
-            .get(`${GLOBALS.EDITOR_URL}/placements/list`)
-            .then(({data}) => setPlacements(data));
+        getPlacementsList()
+            .then((data) => setPlacements(data));
     }, []);
 
     const onChange = useCallback((e: ChangeEvent<{name?: string; value: any}>) => {
         setName(e.target.value);
 
-        Axios
-            .get(`${GLOBALS.EDITOR_URL}/placements`, {params: {placementName: e.target.value}})
-            .then(({data}) => onPlacementLoad(data));
+        getPlacement(e.target.value)
+            .then((data) => onPlacementLoad(data));
     }, [onPlacementLoad]);
 
     const handleSave = useCallback(() => {

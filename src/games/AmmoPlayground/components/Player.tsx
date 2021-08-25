@@ -41,7 +41,11 @@ export const Player: FC = () => {
     const inventoryAddon: KeyboardAddon[] = useMemo(() => [{
         key: 'e',
         action: () => {
-            const placement = activeObject?.userData.placement;
+            const {placement, action} = activeObject?.userData ?? {};
+
+            if (action) {
+                action();
+            }
 
             if (placement) {
                 deleteDynamic(placement);
@@ -65,7 +69,7 @@ export const Player: FC = () => {
     }, {
         key: '-',
         action: () => setActiveIndex(index - 1),
-    }], [activeObject?.userData.placement, addItem, addPlacement, deleteDynamic, index, items, ref, setActiveIndex]);
+    }], [activeObject, addItem, addPlacement, deleteDynamic, index, items, ref, setActiveIndex]);
 
     useMouseControls(rb, cameraRef, handRef);
     useKeyboardControls(ref, rb, inventoryAddon);

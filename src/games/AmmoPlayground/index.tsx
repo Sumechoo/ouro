@@ -12,13 +12,12 @@ export const AmmoPlayground: GameInstance = {
             <HUD />
         </div>
     ),
-    // Ui: () => null,
     Game: () => {
         const {isEnabled} = useLevelEditor();
 
         return (
             <AmmoPhysics>
-                <ambientLight intensity={0.01} color="orange"/>
+                {/* <ambientLight intensity={0.2} color="white"/> */}
                 <LevelContainer />
 
                 {!isEnabled && <Player />}
