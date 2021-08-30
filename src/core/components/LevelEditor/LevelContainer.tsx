@@ -2,6 +2,7 @@ import { FC, Fragment } from "react";
 import { emptyFn } from "../../../constants";
 
 import { ConcaveModel } from "../ConcaveModel";
+import { DecorationModel } from "../DecorationModel";
 import { Pickable } from "../Pickable";
 import { Creature } from "../Creature";
 import { Portal } from "../Portal";
@@ -10,6 +11,7 @@ import { useLevelEditor } from "./useLevelEditor";
 
 export const PlacementsMap: Record<string, FC<ObjectProps>> = {
     ConcaveModel,
+    DecorationModel,
     Pickable,
     Creature,
     Portal,

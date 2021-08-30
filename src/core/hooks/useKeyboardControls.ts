@@ -9,7 +9,7 @@ import { inverseDebounce } from "../utils";
 const directionVector = new Vector3(0,0,0);
 const speedVector = new Vector3(0, 0, 0);
 
-const MOVEMENT_SPEED = 1.5;
+const MOVEMENT_SPEED = 2.5;
 
 export interface KeyboardAddon {
     key: string;

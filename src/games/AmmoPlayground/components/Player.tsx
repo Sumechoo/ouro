@@ -87,15 +87,6 @@ export const Player: FC = () => {
                 >
                     <boxBufferGeometry args={[0.2,0.2,0.5]}/>
                     <meshPhysicalMaterial />
-
-                    <pointLight
-                        ref={shadowRef}
-                        castShadow={false}
-                        position={[0, 0, -0.3]}
-                        color='orange'
-                        intensity={1}
-                        distance={8}
-                    />
                 </mesh>
             </DefaultCamera>
             

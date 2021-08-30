@@ -19,6 +19,24 @@ export const useInventoryState = create<InventoryState>((set) => ({
                 size: [0.2, 1, 1]
             },
         },
+        {
+            component: 'ConcaveModel',
+            props: {
+                name: 'house_01'
+            },
+        },
+        {
+            component: 'DecorationModel',
+            props: {
+                name: 'tree'
+            },
+        },
+        {
+            component: 'ConcaveModel',
+            props: {
+                name: 'garage'
+            },
+        },
     ],
 
     addItem: (newItem) => set((state) => ({ items: [...state.items, newItem] })),
