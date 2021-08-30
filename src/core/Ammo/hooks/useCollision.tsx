@@ -88,7 +88,7 @@ export const useCollision = (props: Props) => {
             context?.world.addRigidBody(rigidbody);
             setRb(rigidbody);
         }
-    }, [ref, context, size, rb, geometryData, mass, position, rotation, lockRotation]);
+    }, [ref, context, size, rb, geometryData, mass, position, rotation, lockRotation, forceDynamic]);
 
     useEffect(() => () => {
         if (rb) {

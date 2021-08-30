@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, useEffect } from "react";
 import { emptyFn } from "../../../constants";
 
 import { ConcaveModel } from "../ConcaveModel";
@@ -8,6 +8,8 @@ import { Creature } from "../Creature";
 import { Portal } from "../Portal";
 import { ObjectProps } from "./types";
 import { useLevelEditor } from "./useLevelEditor";
+import { GLOBAL_CONFIG } from "../../../globalConfig";
+import { getPlacement } from "../../api/getPlacement";
 
 export const PlacementsMap: Record<string, FC<ObjectProps>> = {
     ConcaveModel,
@@ -18,7 +20,17 @@ export const PlacementsMap: Record<string, FC<ObjectProps>> = {
 }
 
 export const LevelContainer: FC = () => {
-    const {isEnabled, setIndex, configs, currentDynamics} = useLevelEditor();
+    const {isEnabled, setIndex, configs, setPlacementConfigs, currentDynamics, toggle} = useLevelEditor();
+
+    useEffect(() => {
+        if (GLOBAL_CONFIG.IS_PROD) {
+            getPlacement(GLOBAL_CONFIG.INIT_PLACEMENT)
+                .then((configs) => {
+                    setPlacementConfigs(configs);
+                    setTimeout(toggle, 500);
+                });
+        }
+    }, [setPlacementConfigs]);
 
     return (
         <Fragment>

@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, Fragment, useCallback, useEffect, useState } from "react";
 import {Button, Card, CardContent, CardHeader, Grid, makeStyles, TextField} from '@material-ui/core';
 import axios from "axios";
 
@@ -6,6 +6,7 @@ import { useLevelEditor } from "./useLevelEditor";
 import { PlacementsSelector } from "./PlacementsSelector";
 import { GLOBALS } from "../../../globals";
 import { useDebugState } from "../../hooks/useDebugState";
+import { GLOBAL_CONFIG } from "../../../globalConfig";
 
 export const LevelEditorUI: FC = ({children}) => {
     const classes = useStyles();
@@ -30,6 +31,12 @@ export const LevelEditorUI: FC = ({children}) => {
     const onSave = useCallback(() => {
         axios.post(`${GLOBALS.EDITOR_URL}/placements`, {...configs, dynamics: currentDynamics});
     }, [configs, currentDynamics]);
+
+    if (GLOBAL_CONFIG.IS_PROD) {
+        return (
+            <Fragment>{children}</Fragment>
+        )
+    }
     
     return (
         <div className={classes.container}>

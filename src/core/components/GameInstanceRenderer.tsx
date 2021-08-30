@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import { Canvas } from "@react-three/fiber";
 import { FC, useEffect } from "react";
+import { GLOBAL_CONFIG } from "../../globalConfig";
 import { LevelEditorUI } from "../components/LevelEditor/LevelEditorUI";
 
 import { GameInstance } from "../types";
@@ -51,7 +52,9 @@ export const GameInstanceRenderer: FC<Props> = ({instance}) => {
     } = instance;
 
     useEffect(() => {
-        // document.addEventListener('click', lockMouse);
+        if (GLOBAL_CONFIG.IS_PROD) {
+            document.addEventListener('click', lockMouse);
+        }
     }, [])
 
     return (
