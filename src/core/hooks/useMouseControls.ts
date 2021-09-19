@@ -1,56 +1,51 @@
 import Ammo from "ammojs-typed";
 import { MutableRefObject, useCallback, useEffect, useState } from "react";
-import { Object3D, PerspectiveCamera } from "three";
-import {useSpring} from 'react-spring';
+import { PerspectiveCamera } from "three";
 
-import { AmmoProvider } from "../Ammo/AmmoProvider";
-import { useFrame } from "@react-three/fiber";
-import { toRadians } from "../utils";
+import { rotateRigidbodyByEuler } from "../utils";
+import { TouchItem } from "./useTouchAxes";
 
 export const useMouseControls = (
     rb?: Ammo.btRigidBody,
     camera?: MutableRefObject<PerspectiveCamera | undefined>,
-    handRef?: MutableRefObject<Object3D | undefined>,
+    cameraTouch?: TouchItem,
 ) => {
-    const [to, setTo] = useState(50);
-    const {x} = useSpring({
-        x: 0,
-        to: {x: to},
-        onRest: () => setTo(0),
-    });
-
-    const mouseEventsHandler = useCallback(async (e: MouseEvent) => {
+    const [charging, setCharging] = useState(false);
+    const rotateCamera = useCallback(async (x = 0, y = 0) => {
         if(!rb) {
             return;
         }
 
-        const api = await AmmoProvider.getApi();
+        rotateRigidbodyByEuler(rb, 0, -x, 0);
 
-        rb.setAngularVelocity(new api.btVector3(0, -e.movementX / 2, 0));
-        rb.setFriction(0);
-
-        camera?.current?.rotateX(-e.movementY / 200);
+        camera?.current?.rotateX(-y);
     }, [rb, camera]);
 
-    const mouseClick = useCallback(() => {
-        setTo(45);
+    const mouseEventsHandler = useCallback(async (e: MouseEvent) => {
+        rotateCamera(e.movementX / 200, e.movementY / 200);
+    }, [rotateCamera]);
+
+    const mouseDown = useCallback(() => {
+        setCharging(true);
     }, []);
 
-    useFrame(() => {
-        if (!handRef || !handRef.current) {
-            return;
-        }
-
-        handRef.current.rotation.set(toRadians(x.get()), 0, 0);
-    });
+    const mouseUp = useCallback(() => {
+        setCharging(false);
+    }, []);
 
     useEffect(() => {
         document.addEventListener('mousemove', mouseEventsHandler);
-        document.addEventListener('click', mouseClick);
+        document.addEventListener('mousedown', mouseDown);
+        document.addEventListener('mouseup', mouseUp);
 
         return () => {
             document.removeEventListener('mousemove', mouseEventsHandler);
-            document.removeEventListener('click', mouseClick);
+            document.removeEventListener('mousedown', mouseDown);
+            document.removeEventListener('mouseup', mouseUp);
         }
-    }, [mouseClick, mouseEventsHandler]);
+    }, [mouseUp, mouseDown, mouseEventsHandler]);
+
+    return {
+        charging,
+    }
 }

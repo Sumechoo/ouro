@@ -5,7 +5,7 @@ import { GLOBAL_CONFIG } from "../../globalConfig";
 import { LevelEditorUI } from "../components/LevelEditor/LevelEditorUI";
 
 import { GameInstance } from "../types";
-import { useLevelEditor } from "./LevelEditor/useLevelEditor";
+import { ResourceContextProvider } from './ResourceContext';
 
 interface Props {
     instance: GameInstance;
@@ -44,7 +44,6 @@ const lockMouse = () => document.body.requestPointerLock();
 
 export const GameInstanceRenderer: FC<Props> = ({instance}) => {
     const classes = useStyles();
-    const {isEnabled} = useLevelEditor();
     
     const {
         Game,
@@ -55,10 +54,12 @@ export const GameInstanceRenderer: FC<Props> = ({instance}) => {
         if (GLOBAL_CONFIG.IS_PROD) {
             document.addEventListener('click', lockMouse);
         }
-    }, [])
+    }, []);
 
     return (
-        <div className={classes.fullScreen}>
+        <div
+            className={classes.fullScreen}
+        >
             <LevelEditorUI>
                 <div className={classes.gameContainer}>
                     <Canvas
@@ -66,8 +67,9 @@ export const GameInstanceRenderer: FC<Props> = ({instance}) => {
                         shadows
                         camera={{position: [0, 5, 9], fov: 100}}
                     >
-                        {isEnabled && <ambientLight intensity={1} />}
-                        <Game />
+                        <ResourceContextProvider>
+                            <Game />
+                        </ResourceContextProvider>
                     </Canvas>
                     <div className={classes.gameUiContainer}>
                         <Ui/>

@@ -3,7 +3,7 @@
         {
             "component": "ConcaveModel",
             "props": {
-                "name": "gipt",
+                "name": "manual",
                 "position": [
                     0,
                     0,

@@ -16,6 +16,7 @@ export interface EditorObjectProps {
 }
 
 export interface Placement {
+    alias?: string;
     component: keyof typeof PlacementsMap;
     props: Omit<ObjectProps, keyof EditorObjectProps>;
 }

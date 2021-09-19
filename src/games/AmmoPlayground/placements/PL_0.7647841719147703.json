@@ -1,0 +1,795 @@
+{
+    "statics": [
+        {
+            "component": "ConcaveModel",
+            "props": {
+                "name": "manual",
+                "position": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        }
+    ],
+    "dynamics": [
+        {
+            "component": "Pickable",
+            "props": {
+                "position": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "component": "Pickable",
+            "props": {
+                "position": [
+                    0,
+                    1,
+                    0
+                ]
+            }
+        },
+        {
+            "component": "Creature",
+            "props": {
+                "position": [
+                    0,
+                    2,
+                    0
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    2.0846776962280273,
+                    0.2499178946018219,
+                    -6.082993984222412
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    2.122847080230713,
+                    0.24667641520500183,
+                    -7.244679927825928
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    1.9318596124649048,
+                    0.2499191164970398,
+                    -8.23026180267334
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    1.9122425317764282,
+                    0.24996712803840637,
+                    -10.585506439208984
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    1.8973381519317627,
+                    0.25214964151382446,
+                    -11.807404518127441
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    1.8804290294647217,
+                    0.24588070809841156,
+                    -12.987710952758789
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    2.658097267150879,
+                    0.2499331682920456,
+                    -15.032732009887695
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    4.491976737976074,
+                    0.24993959069252014,
+                    -14.672220230102539
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -2.154006004333496,
+                    0.24849416315555573,
+                    -18.204586029052734
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -4.058526992797852,
+                    0.2756471037864685,
+                    -17.228641510009766
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -9.629385948181152,
+                    0.2479044497013092,
+                    -21.38853645324707
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -10.45240592956543,
+                    0.24999874830245972,
+                    -20.76402473449707
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -14.775931358337402,
+                    0.24933533370494843,
+                    -18.9172420501709
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -11.5656156539917,
+                    0.24989846348762512,
+                    -9.541616439819336
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -11.228065490722656,
+                    0.24527059495449066,
+                    -6.90668249130249
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -13.669872283935547,
+                    0.248744934797287,
+                    -2.313363790512085
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -18.114152908325195,
+                    0.2519990801811218,
+                    -2.5573315620422363
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -20.419353485107422,
+                    0.265470027923584,
+                    -2.6755998134613037
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -21.574100494384766,
+                    0.24998964369297028,
+                    -2.4422976970672607
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -21.556026458740234,
+                    0.24999991059303284,
+                    2.6750898361206055
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -18.358642578125,
+                    0.24999739229679108,
+                    2.539728879928589
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -16.196874618530273,
+                    0.2498413771390915,
+                    2.5447072982788086
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -16.758033752441406,
+                    0.24852219223976135,
+                    5.646632671356201
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -18.481548309326172,
+                    0.24981528520584106,
+                    5.446638584136963
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -21.44236946105957,
+                    0.2499590516090393,
+                    5.164815902709961
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -21.601322174072266,
+                    0.24899353086948395,
+                    8.241129875183105
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -21.52108383178711,
+                    0.24953968822956085,
+                    10.879496574401855
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -18.280044555664062,
+                    0.2499999701976776,
+                    10.58120346069336
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -16.63015365600586,
+                    0.24885119497776031,
+                    10.576043128967285
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -14.320945739746094,
+                    0.2496233731508255,
+                    10.596736907958984
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -13.351278305053711,
+                    0.24947455525398254,
+                    10.500696182250977
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -13.372374534606934,
+                    0.24998797476291656,
+                    8.477336883544922
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -13.465049743652344,
+                    0.24732358753681183,
+                    5.561308860778809
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -9.763691902160645,
+                    0.24898295104503632,
+                    5.305865287780762
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -8.202269554138184,
+                    0.2520850896835327,
+                    5.460517406463623
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -10.221063613891602,
+                    0.24636977910995483,
+                    2.641390085220337
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -10.311198234558105,
+                    0.24888591468334198,
+                    -0.5543808341026306
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -6.465451240539551,
+                    0.248728945851326,
+                    -0.6892492175102234
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -6.260642051696777,
+                    0.24991892278194427,
+                    -2.086784839630127
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -4.2750678062438965,
+                    0.26096057891845703,
+                    -2.6601011753082275
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -2.1201157569885254,
+                    0.28039443492889404,
+                    -2.1307802200317383
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    7.784461498260498,
+                    0.24999551475048065,
+                    -4.627048969268799
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    12.135668754577637,
+                    0.24983549118041992,
+                    -5.329134941101074
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    13.329883575439453,
+                    0.24690976738929749,
+                    -5.3386406898498535
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    14.5647554397583,
+                    0.2492939829826355,
+                    -5.4382243156433105
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    16.737045288085938,
+                    0.24999885261058807,
+                    -5.465660572052002
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    18.77055549621582,
+                    0.24774885177612305,
+                    -5.712712287902832
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    18.449268341064453,
+                    0.24992311000823975,
+                    -7.439786911010742
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    18.334867477416992,
+                    0.24948783218860626,
+                    -9.9202241897583
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    12.863903999328613,
+                    0.27178359031677246,
+                    -15.408683776855469
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    10.813207626342773,
+                    0.2667962610721588,
+                    -15.52420711517334
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    7.786772727966309,
+                    0.2621529698371887,
+                    -15.602311134338379
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    5.948596954345703,
+                    0.26122957468032837,
+                    -15.499829292297363
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -1.7912805080413818,
+                    0.24979564547538757,
+                    -22.255126953125
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -2.899791717529297,
+                    0.2766842246055603,
+                    -22.27790641784668
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -1.3886321783065796,
+                    0.24996627867221832,
+                    -13.627728462219238
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -1.8105579614639282,
+                    0.24666330218315125,
+                    -10.704866409301758
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -1.6406100988388062,
+                    0.24983640015125275,
+                    -8.59919261932373
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -2.0605010986328125,
+                    0.24807564914226532,
+                    -6.626508712768555
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -1.7799464464187622,
+                    0.24997621774673462,
+                    -4.10577392578125
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -4.566114902496338,
+                    0.25244370102882385,
+                    -3.8197641372680664
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -7.895876884460449,
+                    0.24499821662902832,
+                    -4.104096412658691
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -10.635306358337402,
+                    0.2562568485736847,
+                    -3.8084843158721924
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -13.482065200805664,
+                    0.25436848402023315,
+                    -0.28529152274131775
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -13.515034675598145,
+                    0.24972344934940338,
+                    2.470845937728882
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -13.5920991897583,
+                    0.2574274241924286,
+                    7.93742561340332
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -10.133294105529785,
+                    0.24994586408138275,
+                    8.47619915008545
+                ]
+            }
+        },
+        {
+            "component": "DecorationModel",
+            "props": {
+                "name": "tree",
+                "position": [
+                    -8.223360061645508,
+                    0.25221362709999084,
+                    8.576154708862305
+                ]
+            }
+        }
+    ]
+}

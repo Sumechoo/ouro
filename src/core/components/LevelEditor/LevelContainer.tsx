@@ -49,7 +49,7 @@ export const LevelContainer: FC = () => {
                                 setIndex(index);
                             } : emptyFn}
 
-                            key={JSON.stringify(placement)}
+                            key={JSON.stringify(props)}
                         />
                     );
                 })

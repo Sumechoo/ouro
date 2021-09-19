@@ -1,7 +1,8 @@
 import { makeStyles, Card, Button } from "@material-ui/core";
-import { FC } from "react";
+import { FC, useRef } from "react";
 
 import { useRaycasterState } from "../../../core/hooks/useRaycaster";
+import { useTouchAxes } from "../../../core/hooks/useTouchAxes";
 import { useInventoryState } from "../hooks/useInventoryState";
 
 export const HUD: FC = () => {
@@ -15,10 +16,11 @@ export const HUD: FC = () => {
             <Card>
                 {items.map((item, i) => (
                     <Button
+                        color={index === i ? 'primary' : 'default'}
                         variant={index === i ? 'contained' : 'text'}
-                        key={item.component}
+                        key={item.component + Math.random()}
                     >
-                        {item.component}
+                        {item.alias ?? item.component}
                     </Button>))
                 }
             </Card>

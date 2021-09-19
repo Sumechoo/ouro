@@ -25,8 +25,6 @@ export const Pickable: FC<ObjectProps> = memo(({
         <mesh ref={ref} castShadow receiveShadow>
             <boxGeometry args={[1,1,1]}/>
             <meshPhysicalMaterial />
-
-            {/* {active && <pointLight position={[0, 0, 0]} intensity={1} distance={2} color='white' />} */}
         </mesh>
     )
 });

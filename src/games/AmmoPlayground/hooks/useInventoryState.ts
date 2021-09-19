@@ -14,27 +14,31 @@ export const useInventoryState = create<InventoryState>((set) => ({
     index: 0,
     items: [
         {
+            alias: 'Level Portal', 
             component: 'Portal',
             props: {
                 size: [0.2, 1, 1]
             },
         },
         {
-            component: 'ConcaveModel',
-            props: {
-                name: 'house_01'
-            },
-        },
-        {
+            alias: 'Tree',
             component: 'DecorationModel',
             props: {
                 name: 'tree'
             },
         },
         {
+            alias: 'Garage',
             component: 'ConcaveModel',
             props: {
                 name: 'garage'
+            },
+        },
+        {
+            alias: 'Grass',
+            component: 'DecorationModel',
+            props: {
+                name: 'tall_grass'
             },
         },
     ],

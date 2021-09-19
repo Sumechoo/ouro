@@ -5,9 +5,10 @@ import { LevelContainer } from "../../core/components/LevelEditor/LevelContainer
 import { Player } from './components/Player';
 import { HUD } from './UI/HUD';
 import { useLevelEditor } from "../../core/components/LevelEditor/useLevelEditor";
+import { PlayerAwareLight } from "./components/PlayerAwareLight";
 import { useThree } from "@react-three/fiber";
 import { FogExp2 } from "three";
-import { useEffect } from "react";
+import {useEffect} from 'react';
 
 export const AmmoPlayground: GameInstance = {
     Ui: () => (
@@ -20,13 +21,16 @@ export const AmmoPlayground: GameInstance = {
         const scene = useThree(({scene}) => scene);
 
         useEffect(() => {
-            scene.fog = new FogExp2('gray', 0.01);
+            if(!scene.fog) {
+                scene.fog = new FogExp2('lightblue', 0.03);
+            }
         }, [scene]);
 
         return (
             <AmmoPhysics>
-                <ambientLight intensity={.4} color="white"/>
-                <directionalLight color="orange" intensity={1} position={[1, 3, 3]}/>
+                <ambientLight intensity={.1} color="lightblue"/>
+                {/* <PlayerAwareLight /> */}
+
                 <LevelContainer />
 
                 {!isEnabled && <Player />}

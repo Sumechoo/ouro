@@ -1,10 +1,11 @@
 import { useFrame } from "@react-three/fiber";
 import Ammo from "ammojs-typed";
-import { MutableRefObject, useCallback, useEffect } from "react";
+import { MutableRefObject, useCallback, useEffect, useState } from "react";
 import { Object3D, Vector3 } from "three";
 
 import { AmmoProvider } from "../Ammo/AmmoProvider";
 import { inverseDebounce } from "../utils";
+import { TouchItem } from "./useTouchAxes";
 
 const directionVector = new Vector3(0,0,0);
 const speedVector = new Vector3(0, 0, 0);
@@ -19,8 +20,12 @@ export interface KeyboardAddon {
 export const useKeyboardControls = (
     ref: MutableRefObject<Object3D | undefined>,
     rb?: Ammo.btRigidBody,
+    movementTouch?: TouchItem,
     addons: Array<KeyboardAddon> = [],
 ) => {
+    const [crouch, setCrouch] = useState(false);
+    const [walk, setWalk] = useState(false);
+
     const jump = useCallback(inverseDebounce(() => {
         const api = AmmoProvider.getApiSync();
 
@@ -33,9 +38,11 @@ export const useKeyboardControls = (
     const keyDownListener = useCallback((event: KeyboardEvent) => {
         switch(event.key) {
             case 'w':
+                setWalk(true);
                 speedVector.z = -MOVEMENT_SPEED;
                 break;
             case 's':
+                setWalk(true);
                 speedVector.z = MOVEMENT_SPEED;
                 break;
             case 'a':
@@ -46,6 +53,9 @@ export const useKeyboardControls = (
                 break;
             case ' ':
                 jump();
+                break;
+            case 'Shift':
+                setCrouch(true);
                 break;
             default:
                 addons.forEach(({key, action}) => {
@@ -61,11 +71,16 @@ export const useKeyboardControls = (
         switch(event.key) {
             case 'w':
             case 's':
+                setWalk(false);
                 speedVector.z = 0;
                 break;
             case 'a':
             case 'd':
+                setWalk(false);
                 speedVector.x = 0;
+                break;
+            case 'Shift':
+                setCrouch(false);
                 break;
         }
     }, []);
@@ -74,6 +89,12 @@ export const useKeyboardControls = (
         if(!ref.current) {
             return;
         }
+
+        // if (movementTouch) {
+        //     speedVector.z = -(movementTouch.delta.y / 50);
+        // } else {
+        //     speedVector.z = 0;
+        // }
 
         const api = await AmmoProvider.getApi();
 
@@ -97,4 +118,9 @@ export const useKeyboardControls = (
             document.removeEventListener('keyup', keyUpListener);
         }
     }, [keyDownListener, keyUpListener]);
+
+    return {
+        crouch,
+        walk,
+    }
 };
