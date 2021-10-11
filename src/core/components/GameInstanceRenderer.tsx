@@ -1,9 +1,10 @@
 import { makeStyles } from "@material-ui/core";
 import { Canvas } from "@react-three/fiber";
 import { FC, useEffect } from "react";
+import { ReinhardToneMapping, CineonToneMapping, LinearToneMapping } from 'three';
+
 import { GLOBAL_CONFIG } from "../../globalConfig";
 import { LevelEditorUI } from "../components/LevelEditor/LevelEditorUI";
-
 import { GameInstance } from "../types";
 import { ResourceContextProvider } from './ResourceContext';
 
@@ -66,6 +67,10 @@ export const GameInstanceRenderer: FC<Props> = ({instance}) => {
                         id="mainCanvas"
                         shadows
                         camera={{position: [0, 5, 9], fov: 100}}
+                        onCreated={({gl}) => {
+                            gl.toneMapping = LinearToneMapping;
+                            // gl.toneMappingExposure = 0.7;
+                        }}
                     >
                         <ResourceContextProvider>
                             <Game />

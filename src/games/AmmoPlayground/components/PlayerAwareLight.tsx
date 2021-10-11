@@ -1,17 +1,15 @@
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { FC, useRef, useEffect } from "react"
-import { CameraHelper, DirectionalLight, Vector2 } from "three";
+import { DirectionalLight, Vector2 } from "three";
 import { useLevelEditor } from "../../../core/components/LevelEditor/useLevelEditor";
 
 export const PlayerAwareLight: FC = () => {
     const lightRef = useRef<DirectionalLight>(null);
     const {player} = useLevelEditor();
-    const scene = useThree(({scene}) => scene);
 
     useEffect(() => {
         if(lightRef.current) {
 
-            // scene.add(new CameraHelper(lightRef.current.shadow.camera));
 
             if(player) {
                 lightRef.current.target = player;
@@ -22,17 +20,21 @@ export const PlayerAwareLight: FC = () => {
             lightRef.current.shadow.camera.right = 15;
             lightRef.current.shadow.camera.left = -15;
 
+            lightRef.current.shadow.bias = 0.0002;
+            lightRef.current.shadow.normalBias = 0.1;
 
-            lightRef.current.shadow.mapSize = new Vector2(1025, 1024);
+            lightRef.current.castShadow = true;
+
+            lightRef.current.shadow.mapSize = new Vector2(2048, 2048);
         }
     }, [lightRef, player]);
 
     useFrame(() => {
         if(lightRef.current && player) {
             lightRef.current.position.set(
-                player.position.x + 8,
-                player.position.y + 16,
-                player.position.z - 6,
+                player.position.x - 16,
+                player.position.y + 12,
+                player.position.z + 12,
             );
         }
     })
@@ -40,10 +42,9 @@ export const PlayerAwareLight: FC = () => {
     return (
         <directionalLight
             ref={lightRef}
-            castShadow
-            color="orange"
-            intensity={2}
-            position={[1, 2, 3]}
+            color={0xFF5A00}
+            intensity={0.8}
+            position={[0,0,0]}
         />
     )
 }

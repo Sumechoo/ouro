@@ -1,8 +1,9 @@
+import { Vector3 } from "@react-three/fiber";
 import { Object3D } from "three";
 import create from "zustand";
 import { Placement, PlacementConfig } from "./types";
 
-interface EditorState {
+export interface EditorState {
     isEnabled: boolean;
     configs: PlacementConfig;
     currentDynamics: Placement[];
@@ -15,7 +16,7 @@ interface EditorState {
     setIndex: (i: number) => void;
 
     deleteDynamic: (placement: Placement) => void;
-    addPlacement: (placement: Placement) => void;
+    addPlacement: (placement: Placement, at?: Vector3) => void;
     setPlayer: (player?: Object3D) => void;
 }
 
@@ -32,6 +33,12 @@ export const useLevelEditor = create<EditorState>((set) => ({
     setPlacementConfigs: (configs) => set({configs, currentDynamics: configs.dynamics ?? []}),
     setIndex: (index = 0) => set({index}),
     deleteDynamic: (placement) => set((state) => ({currentDynamics: state.currentDynamics.filter((item) => item !== placement)})),
-    addPlacement: (placement) => set(({currentDynamics}) => ({currentDynamics: [...currentDynamics, placement]})),
+    addPlacement: (placement, at) => set(({currentDynamics}) => ({currentDynamics: [...currentDynamics, {
+        ...placement,
+        props: {
+            ...placement.props,
+            position: at,
+        }
+    }]})),
     setPlayer: (player) => set({player}),
 }));

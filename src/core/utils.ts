@@ -1,7 +1,6 @@
-import { Euler } from "@react-three/fiber";
 import Ammo from "ammojs-typed";
-import { Object3D, Quaternion } from "three";
-import { AmmoProvider } from "./Ammo/AmmoProvider";
+import { MutableRefObject } from "react-transition-group/node_modules/@types/react";
+import { Object3D, Quaternion, Vector3, Vector3Tuple } from "three";
 
 export const toRadians = (angle = 0) => {
   return angle * (Math.PI / 180);
@@ -51,4 +50,32 @@ export const rotateRigidbodyByEuler = (rb: Ammo.btRigidBody, x: number, y: numbe
   );
 
   transform.setRotation(rotation);
+}
+
+export const addTupleVectors = (...vectors: Vector3Tuple[]) => {
+  const resultTuple: Vector3Tuple = [0,0,0];
+
+  vectors.forEach((item) => {
+    resultTuple[0] += item[0];
+    resultTuple[1] += item[1];
+    resultTuple[2] += item[2];
+  });
+
+  return resultTuple;
+}
+
+export const multiplyTupleByScalar = (vector: Vector3Tuple, scalar = 1): Vector3Tuple => {
+  return [
+    vector[0] * scalar,
+    vector[1] * scalar,
+    vector[2] * scalar,
+  ];
+}
+
+const directionVector = new Vector3();
+
+export const getWorldDirection = (obj: Object3D) => {
+  obj.getWorldDirection(directionVector);
+
+  return directionVector;
 }

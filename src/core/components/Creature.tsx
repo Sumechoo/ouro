@@ -3,6 +3,7 @@ import { FC, Suspense, useCallback } from "react";
 import { DoubleSide, TextureLoader } from "three";
 
 import { useCollision } from "../Ammo/hooks/useCollision";
+import { IdManager } from "../classes/IdManager";
 import { useCreatureProperties } from "../hooks/useCreatureProperties";
 import { useGenetics } from "../hooks/useGenetics";
 import { ObjectProps } from "./LevelEditor/types";
@@ -24,6 +25,7 @@ const CreatureSuspended: FC<ObjectProps> = ({
 
         deleteDynamic(placement);
         addPlacement({
+            id: IdManager.getNewId(),
             component: 'Pickable',
             props: {
                 position: [currentPosition[0], currentPosition[1] + 1, currentPosition[2]],

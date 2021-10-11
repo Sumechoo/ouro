@@ -1,26 +1,37 @@
 import create from 'zustand';
-import { Placement } from '../../../core/components/LevelEditor/types';
+import { IdManager } from '../../../core/classes/IdManager';
+
+import { Placement, Tool } from '../../../core/components/LevelEditor/types';
+
+type InventoryItem = Placement | Tool;
 
 interface InventoryState {
     index: number,
-    items: Placement[];
+    items: InventoryItem[];
 
     setActiveIndex: (index: number) => void;
-    addItem: (item: Placement) => void;
-    removeItem: (item: Placement) => void;
+    addItem: (item: InventoryItem) => void;
+    removeItem: (item: InventoryItem) => void;
 }
 
 export const useInventoryState = create<InventoryState>((set) => ({
     index: 0,
     items: [
         {
-            alias: 'Level Portal', 
-            component: 'Portal',
-            props: {
-                size: [0.2, 1, 1]
+            alias: 'Gun prototype',
+            primaryAction: (levelApi, position, direction) => {
+                levelApi.addPlacement({
+                    id: IdManager.getNewId(),
+                    component: 'Bullet',
+                    props: {
+                        direction,
+                    },
+                }, position);
             },
+            secondaryAction: () => {},
         },
         {
+            id: IdManager.getNewId(),
             alias: 'Tree',
             component: 'DecorationModel',
             props: {
@@ -28,6 +39,30 @@ export const useInventoryState = create<InventoryState>((set) => ({
             },
         },
         {
+            id: IdManager.getNewId(),
+            alias: 'Pine',
+            component: 'DecorationModel',
+            props: {
+                name: 'pine'
+            },
+        },
+        {
+            id: IdManager.getNewId(),
+            alias: 'Trash Can',
+            component: 'CreatureSpawner',
+            props: {
+                delay: 1000,
+                targetPlacement: {
+                    id: IdManager.getNewId(),
+                    component: 'ConcaveModel',
+                    props: {
+                        name: 'trashcan'
+                    },
+                }
+            },
+        },
+        {
+            id: IdManager.getNewId(),
             alias: 'Garage',
             component: 'ConcaveModel',
             props: {
@@ -35,6 +70,7 @@ export const useInventoryState = create<InventoryState>((set) => ({
             },
         },
         {
+            id: IdManager.getNewId(),
             alias: 'Grass',
             component: 'DecorationModel',
             props: {

@@ -11,6 +11,8 @@ import { useMouseControls } from "../../../core/hooks/useMouseControls";
 import { useRaycaster, useRaycasterState } from "../../../core/hooks/useRaycaster";
 import { useInventoryState } from "../hooks/useInventoryState";
 import { isCreatureUserData, useCreatureProperties } from "../../../core/hooks/useCreatureProperties";
+import { isPlacementItem } from "../../../core/components/LevelEditor/guards";
+import { addTupleVectors, getWorldDirection, multiplyTupleByScalar } from "../../../core/utils";
 
 export const Player: FC = () => {
     const {ref, rb} = useCollision({mass: 1, size: [0.5,0.5,0.5], position: [1, 1, 1], lockRotation: true});
@@ -18,7 +20,8 @@ export const Player: FC = () => {
     const {addItem, removeItem, items, index, setActiveIndex} = useInventoryState();
     const {setActiveObject} = useRaycasterState();
     const {activeObject} = useRaycaster(cameraRef);
-    const {deleteDynamic, addPlacement, setPlayer} = useLevelEditor();
+    const levelEditorApi = useLevelEditor();
+    const {deleteDynamic, addPlacement, setPlayer} = levelEditorApi;
     const {touches} = useAxesState();
     const rightTouches = useMemo(() => touches.filter((item) => item.side === 'right'), [touches]);
     const leftTouches = useMemo(() => touches.filter((item) => item.side === 'left'), [touches]);
@@ -32,13 +35,8 @@ export const Player: FC = () => {
     const shadowRef = useRef<any>();
     useEffect(() => {
         if (shadowRef.current) {
-            shadowRef.current.shadow.radius = 64;
             shadowRef.current.shadow.mapSize.width = 2048;
             shadowRef.current.shadow.mapSize.height = 2048;
-        }
-
-        if (cameraRef.current) {
-            cameraRef.current.far = 50;
         }
 
         setPlayer(ref.current);
@@ -81,9 +79,18 @@ export const Player: FC = () => {
             if (items.length) {
                 const pickedItem = items[index];
                 const position = ref.current.position.toArray();
+                const direction = cameraRef.current && getWorldDirection(cameraRef.current);
 
-                addPlacement({...pickedItem, props: {...pickedItem.props, position}});
-                // removeItem(pickedItem);
+                if (isPlacementItem(pickedItem)) {
+                    addPlacement(pickedItem, position);
+                    removeItem(pickedItem);
+                } else {
+                    pickedItem.primaryAction(
+                        levelEditorApi,
+                        addTupleVectors(position, [0, 1, 0]),
+                        direction ? multiplyTupleByScalar(direction.toArray(), 10) : [0,0,0],
+                    );
+                }
             }
         },
     }, {
@@ -92,7 +99,7 @@ export const Player: FC = () => {
     }, {
         key: '-',
         action: () => setActiveIndex(index - 1),
-    }], [activeObject, addItem, addPlacement, deleteDynamic, index, items, ref, setActiveIndex]);
+    }], [activeObject?.userData, cameraRef, addItem, addPlacement, deleteDynamic, index, items, levelEditorApi, ref, removeItem, setActiveIndex]);
 
     const {charging} = useMouseControls(rb, cameraRef, rightTouches[0]);
     const {
@@ -112,10 +119,11 @@ export const Player: FC = () => {
         loop: { reverse: true },
         to: {handy: -0.5, handx: 0.5}
     });
-    const { chargingTransform } = useSpring({
+    const { chargingTransform, chargingRotation } = useSpring({
         chargingTransform: charging ? -0.1 : -0.5,
+        chargingRotation: charging ? 0.4 : -0.4,
         reverse: charging,
-        config: charging ? config.slow : {duration: 100, mass: 10},
+        config: charging ? config.slow : config.stiff,
         onRest: () => {
             if (!charging) {
                 const activeObjectUserData = activeObject?.userData;
@@ -141,6 +149,7 @@ export const Player: FC = () => {
                     position-x={handx}
                     position-y={handy}
                     position-z={chargingTransform}
+                    rotation-x={chargingRotation}
                 >
                     <boxBufferGeometry args={[0.2,0.2,0.5]}/>
                     <meshPhysicalMaterial />

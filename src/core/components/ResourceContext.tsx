@@ -22,13 +22,12 @@ const ResourceContextSuspended: FC = ({children}) => {
                     map: colorMap,
                     transparent: true,
                     side: DoubleSide,
-                    alphaTest: 0.2,
+                    alphaTest: 0.5,
                 }),
             ],
             depthMaterial: new MeshDepthMaterial({
                 map: colorMap,
                 alphaTest: 0.3,
-                side: DoubleSide,
                 depthPacking: RGBADepthPacking,
             })
         }

@@ -5,11 +5,17 @@ import { ConcaveModel } from "../ConcaveModel";
 import { DecorationModel } from "../DecorationModel";
 import { Pickable } from "../Pickable";
 import { Creature } from "../Creature";
+import { Bullet } from "../Bullet";
 import { Portal } from "../Portal";
-import { ObjectProps } from "./types";
+import { CreatureSpawner } from "../CreatureSpawner";
+import { ObjectProps, Placement } from "./types";
 import { useLevelEditor } from "./useLevelEditor";
 import { GLOBAL_CONFIG } from "../../../globalConfig";
 import { getPlacement } from "../../api/getPlacement";
+
+import {Player} from '../../../games/AmmoPlayground/components/Player';
+import { InstancingContextProvider } from "../InstacingConext";
+import { IdManager } from "../../classes/IdManager";
 
 export const PlacementsMap: Record<string, FC<ObjectProps>> = {
     ConcaveModel,
@@ -17,6 +23,22 @@ export const PlacementsMap: Record<string, FC<ObjectProps>> = {
     Pickable,
     Creature,
     Portal,
+    CreatureSpawner,
+    Player,
+    Bullet,
+};
+
+const playerSpawner: Placement = {
+    id: IdManager.getNewId(),
+    component: 'CreatureSpawner',
+    props: {
+        delay: 1000,
+        targetPlacement: {
+            id: IdManager.getNewId(),
+            component: 'Player',
+            props: {},
+        }
+    }
 }
 
 export const LevelContainer: FC = () => {
@@ -33,9 +55,9 @@ export const LevelContainer: FC = () => {
     }, [setPlacementConfigs]);
 
     return (
-        <Fragment>
+        <InstancingContextProvider>
             {
-                [...configs.statics, ...currentDynamics].map((placement, index) => {
+                [...configs.statics, ...currentDynamics, playerSpawner].map((placement, index) => {
                     const {component, props} = placement;
                     const Target = PlacementsMap[component];
 
@@ -43,17 +65,18 @@ export const LevelContainer: FC = () => {
                         <Target
                             {...props}
                             placement={placement}
-                            onEditorClick={isEnabled ? (e) => {
-                                e.stopPropagation();
+                            // onEditorClick={isEnabled ? (e) => {
+                            //     e.stopPropagation();
                                 
-                                setIndex(index);
-                            } : emptyFn}
+                            //     setIndex(index);
+                            // } : emptyFn}
+                            onEditorClick={emptyFn}
 
-                            key={JSON.stringify(props)}
+                            key={placement.id}
                         />
                     );
                 })
             }
-        </Fragment>
+        </InstancingContextProvider>
     );
 };

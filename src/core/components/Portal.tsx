@@ -29,8 +29,6 @@ export const Portal: FC<ObjectProps> = ({
 
     return (
         <mesh ref={ref}>
-            <pointLight color="black" distance={5}/>
-
             <boxBufferGeometry />
             <meshBasicMaterial color='brown' />
         </mesh>

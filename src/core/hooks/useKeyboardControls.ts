@@ -4,7 +4,7 @@ import { MutableRefObject, useCallback, useEffect, useState } from "react";
 import { Object3D, Vector3 } from "three";
 
 import { AmmoProvider } from "../Ammo/AmmoProvider";
-import { inverseDebounce } from "../utils";
+import { getWorldDirection, inverseDebounce } from "../utils";
 import { TouchItem } from "./useTouchAxes";
 
 const directionVector = new Vector3(0,0,0);
@@ -97,15 +97,13 @@ export const useKeyboardControls = (
         // }
 
         const api = await AmmoProvider.getApi();
-
         const lastVelocity = rb?.getLinearVelocity();
-
-        ref.current.getWorldDirection(directionVector);
+        const direction = getWorldDirection(ref.current);
 
         rb?.setLinearVelocity(new api.btVector3(
-            directionVector.x * speedVector.z,
+            direction.x * speedVector.z,
             lastVelocity?.y() ?? 0,
-            directionVector.z * speedVector.z,
+            direction.z * speedVector.z,
         ));
     })
 
